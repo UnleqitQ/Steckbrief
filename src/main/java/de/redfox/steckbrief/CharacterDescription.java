@@ -8,6 +8,7 @@ import java.util.UUID;
 
 public class CharacterDescription {
 	
+	public final UUID uuid;
 	public UUID player;
 	public String firstname;
 	public String lastname;
@@ -17,15 +18,17 @@ public class CharacterDescription {
 	public long deathTime;
 	public boolean alive;
 	
-	public CharacterDescription() {
+	public CharacterDescription(UUID uuid) {
+		this.uuid = uuid;
 	}
 	
 	public enum Sex {
 		MALE, FEMALE, DIVERSE, ATTACK_HELICOPTER
 	}
 	
-	public void save(ConfigObject configObject) {
+	public void save(@NotNull ConfigObject configObject) {
 		JsonObject config = new JsonObject();
+		config.addProperty("uuid", uuid.toString());
 		config.addProperty("player", player.toString());
 		config.addProperty("firstname", firstname);
 		config.addProperty("lastname", lastname);
@@ -34,20 +37,21 @@ public class CharacterDescription {
 		config.addProperty("firstJoin", firstJoin);
 		config.addProperty("alive", alive);
 		config.addProperty("deathTime", deathTime);
-		configObject.rootSection.add(firstname + "_" + lastname, config);
+		configObject.rootSection.add(uuid.toString(), config);
 	}
 	
 	@NotNull
 	public static CharacterDescription load(@NotNull JsonObject config) {
-		CharacterDescription characterDescription = new CharacterDescription();
+		CharacterDescription characterDescription = new CharacterDescription(
+				UUID.fromString(config.get("uuid").getAsString()));
 		characterDescription.player = UUID.fromString(config.get("player").getAsString());
-		characterDescription.firstname = config.get("player").getAsString();
-		characterDescription.lastname = config.get("player").getAsString();
-		characterDescription.sexuality = Sex.values()[config.get("player").getAsInt()];
-		characterDescription.joinAge = config.get("player").getAsInt();
-		characterDescription.firstJoin = config.get("player").getAsLong();
-		characterDescription.deathTime = config.get("player").getAsLong();
-		characterDescription.alive = config.get("player").getAsBoolean();
+		characterDescription.firstname = config.get("firstname").getAsString();
+		characterDescription.lastname = config.get("lastname").getAsString();
+		characterDescription.sexuality = Sex.values()[config.get("sexuality").getAsInt()];
+		characterDescription.joinAge = config.get("joinAge").getAsInt();
+		characterDescription.firstJoin = config.get("firstJoin").getAsLong();
+		characterDescription.deathTime = config.get("deathTime").getAsLong();
+		characterDescription.alive = config.get("alive").getAsBoolean();
 		return characterDescription;
 	}
 	
