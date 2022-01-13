@@ -34,16 +34,19 @@ public class ConfigObject {
 		JsonObject currentObject = rootSection;
 		for (int i = 0; i < sections.length; i++) {
 			String sectionKey = sections[i];
+			if (i == sections.length - 1) {
+				currentObject.add(sectionKey, value);
+				break;
+			}
+
 			JsonElement tempObject = currentObject.get(sectionKey);
+
 			if (tempObject == null) {
 				tempObject = new JsonObject();
 				currentObject.add(sectionKey, tempObject);
 			}
 			
 			currentObject = tempObject.getAsJsonObject();
-			if (i == sections.length - 1) {
-				currentObject.add(sectionKey, value);
-			}
 		}
 	}
 	
@@ -66,7 +69,7 @@ public class ConfigObject {
 			StringBuilder read = new StringBuilder((int) sbc.size());
 			int res;
 			while ((res = in.read()) != -1) {
-				read.append(res);
+				read.append((char) res);
 			}
 			rootSection = JSONParser.parse(read.toString());
 			
