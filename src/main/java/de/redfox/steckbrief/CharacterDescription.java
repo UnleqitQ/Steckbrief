@@ -26,6 +26,10 @@ public class CharacterDescription {
 		MALE, FEMALE, DIVERSE, ATTACK_HELICOPTER
 	}
 	
+	public void save() {
+		CharacterManager.saveCharacter(uuid);
+	}
+	
 	public void save(@NotNull ConfigObject configObject) {
 		JsonObject config = new JsonObject();
 		config.addProperty("uuid", uuid.toString());

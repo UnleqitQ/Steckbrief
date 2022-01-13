@@ -18,6 +18,10 @@ public class PlayerInformation {
 		characters = new ArrayList<>();
 	}
 	
+	public void save() {
+		CharacterManager.savePlayer(player);
+	}
+	
 	public void save(ConfigObject configObject) {
 		JsonArray array = new JsonArray(characters.size());
 		for (UUID character : characters) {

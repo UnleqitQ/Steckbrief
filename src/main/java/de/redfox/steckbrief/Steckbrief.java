@@ -1,7 +1,11 @@
 package de.redfox.steckbrief;
 
+import de.redfox.steckbrief.commands.SteckbriefCommand;
 import de.redfox.steckbrief.config.ConfigManager;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.Objects;
 
 public final class Steckbrief extends JavaPlugin {
 	
@@ -9,11 +13,18 @@ public final class Steckbrief extends JavaPlugin {
 	public void onEnable() {
 		// Plugin startup logic
 		ConfigManager.init();
+		CharacterManager.loadCharacters();
+		CharacterManager.loadPlayers();
+		registerCommand("steckbrief", new SteckbriefCommand());
 	}
 	
 	@Override
 	public void onDisable() {
 		// Plugin shutdown logic
+	}
+	
+	public <T extends CommandExecutor> void registerCommand(String cmd, T handler) {
+		Objects.requireNonNull(getCommand(cmd)).setExecutor(handler);
 	}
 	
 }
