@@ -26,4 +26,5 @@ public class CharacterDescription {
 		MALE, FEMALE, DIVERSE, ATTACK_HELICOPTER
 	}
 	
+	
 }
