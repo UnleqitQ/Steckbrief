@@ -7,6 +7,7 @@ public class RoleplayCommand extends Command {
 	public RoleplayCommand() {
 		super("roleplay");
 		register(new CreateCommand());
+		register(new LeaveCommand());
 	}
 	
 }
