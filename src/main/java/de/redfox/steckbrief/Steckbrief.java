@@ -19,11 +19,16 @@ public final class Steckbrief extends JavaPlugin {
 		CharacterManager.loadCharacters();
 		CharacterManager.loadPlayers();
 		registerCommand("steckbrief", new SteckbriefCommand());
+
 		new CustomGenerator();
 
+	}
+
+	@Override
+	public void onLoad() {
 		Bukkit.getPluginManager().registerEvents(new MainListener(), this);
 	}
-	
+
 	@Override
 	public void onDisable() {
 		// Plugin shutdown logic
