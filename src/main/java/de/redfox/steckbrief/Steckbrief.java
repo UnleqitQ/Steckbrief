@@ -1,6 +1,6 @@
 package de.redfox.steckbrief;
 
-import de.redfox.steckbrief.commands.SteckbriefCommand;
+import de.redfox.steckbrief.commands.RoleplayCommand;
 import de.redfox.steckbrief.manager.blindness.BlindnessListener;
 import de.redfox.steckbrief.manager.blindness.BlindnessManager;
 import de.redfox.steckbrief.manager.config.ConfigManager;
@@ -18,8 +18,8 @@ public final class Steckbrief extends JavaPlugin {
 		ConfigManager.init();
 		CharacterManager.loadCharacters();
 		CharacterManager.loadPlayers();
-		registerCommand("steckbrief", new SteckbriefCommand());
-		Bukkit.getPluginManager().registerEvents(new BlindnessListener(), this);
+		registerCommand("roleplay", new RoleplayCommand());
+		//Bukkit.getPluginManager().registerEvents(new BlindnessListener(), this);
 		Bukkit.getPluginManager().registerEvents(new CreationManager(), this);
 		Bukkit.getPluginManager().registerEvents(new CharacterManager(), this);
 		

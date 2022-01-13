@@ -2,10 +2,10 @@ package de.redfox.steckbrief.commands;
 
 import de.redfox.steckbrief.command.Command;
 
-public class SteckbriefCommand extends Command {
+public class RoleplayCommand extends Command {
 	
-	public SteckbriefCommand() {
-		super("steckbrief");
+	public RoleplayCommand() {
+		super("roleplay");
 		register(new CreateCommand());
 	}
 	

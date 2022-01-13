@@ -84,8 +84,8 @@ public class CreationInstance {
 	public void nextStep() {
 		Step next = currentStep.getNextStep();
 		if (next == null) {
-			save();
 			CreationManager.instances.remove(player);
+			save();
 			return;
 		}
 		currentStep = next;

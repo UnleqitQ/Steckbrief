@@ -64,11 +64,11 @@ public final class CharacterManager implements Listener {
 	public void onJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
 		if (hasAliveCharacter(player.getUniqueId())) {
-			CharacterDescription character = characters.get(
-					players.get(player.getUniqueId()).characters.get(0));
-			player.setDisplayName(character.firstname + " " + character.lastname);
-			player.setPlayerListName(character.firstname + " " + character.lastname);
-			player.setCustomName(character.firstname + " " + character.lastname);
+			CharacterDescription character = characters.get(players.get(player.getUniqueId()).characters.get(0));
+			player.setDisplayName(ChatColor.BLUE + character.firstname + " " + character.lastname + ChatColor.WHITE);
+			player.setPlayerListName(
+					ChatColor.BLUE + character.firstname + " " + character.lastname + ChatColor.GRAY + " (" + player.getName() + ")");
+			player.setCustomName(ChatColor.BLUE + character.firstname + " " + character.lastname + ChatColor.WHITE);
 			player.setCustomNameVisible(true);
 			player.sendMessage(
 					ChatColor.GREEN + "You joined as " + ChatColor.GOLD + character.firstname + " " + character.lastname);
