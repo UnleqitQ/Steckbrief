@@ -1,5 +1,6 @@
 package de.redfox.steckbrief.config;
 
+import com.google.gson.JsonNull;
 import com.google.gson.JsonPrimitive;
 
 public class ConfigManager {
@@ -14,6 +15,7 @@ public class ConfigManager {
 	
 	public static void init() {
 		characters = new ConfigObject(pluginPath, "characters.json");
+
 		players = new ConfigObject(pluginPath, "players.json");
 		data = new ConfigObject(pluginPath, "data.json");
 		lang_de = new ConfigObject(pluginPath, "lang_de.json");

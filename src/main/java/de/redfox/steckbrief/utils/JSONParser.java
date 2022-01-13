@@ -8,7 +8,8 @@ public class JSONParser {
     private static Gson g = new Gson();
 
     public static JsonObject parse(String json) {
-        return g.fromJson(json, JsonObject.class);
+        JsonObject object = g.fromJson(json, JsonObject.class);
+        return object != null ? object : new JsonObject();
     }
 
     public static String toString(JsonObject e) {

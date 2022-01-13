@@ -70,10 +70,6 @@ public class ConfigObject {
 			}
 			rootSection = JSONParser.parse(read.toString());
 			
-			if (rootSection == null) {
-				rootSection = new JsonObject();
-			}
-			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
