@@ -26,8 +26,7 @@ public final class CharacterManager {
 	
 	public static void loadPlayers() {
 		for (String key : ConfigManager.players.rootSection.keySet()) {
-			PlayerInformation playerInformation = PlayerInformation.load(ConfigManager.players,
-					UUID.fromString(key));
+			PlayerInformation playerInformation = PlayerInformation.load(ConfigManager.players, UUID.fromString(key));
 			players.put(playerInformation.player, playerInformation);
 		}
 	}
@@ -42,6 +41,15 @@ public final class CharacterManager {
 		if (characters.containsKey(character)) {
 			characters.get(character).save(ConfigManager.characters);
 		}
+	}
+	
+	public static void setPlayerCharacter(UUID player, UUID character) {
+		PlayerInformation information = players.get(player);
+		if (information == null) {
+			information = new PlayerInformation(player);
+			players.put(player, information);
+		}
+		information.characters.add(character);
 	}
 	
 }

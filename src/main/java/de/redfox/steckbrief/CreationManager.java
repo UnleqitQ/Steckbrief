@@ -2,6 +2,7 @@ package de.redfox.steckbrief;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -23,10 +24,11 @@ public final class CreationManager implements Listener {
 		instances.remove(event.getPlayer());
 	}
 	
-	@EventHandler
+	@EventHandler (priority = EventPriority.HIGHEST)
 	public void onChat(@NotNull AsyncPlayerChatEvent event) {
 		if (instances.containsKey(event.getPlayer())) {
-			
+			CreationInstance instance = instances.get(event.getPlayer());
+			instance.input(event.getMessage());
 		}
 		
 	}
