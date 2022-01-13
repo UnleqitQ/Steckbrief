@@ -8,6 +8,8 @@
 # IntelliJ
 out/
 
+pom.xml
+
 # Compiled class file
 *.class
 

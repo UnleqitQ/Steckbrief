@@ -2,4 +2,4 @@ name: Steckbrief
 version: '${project.version}'
 main: de.redfox.steckbrief.Steckbrief
 api-version: 1.18
-authors: [ UnleqitQ, Kevin ]
+authors: [ Kevin, UnleqitQ ]
