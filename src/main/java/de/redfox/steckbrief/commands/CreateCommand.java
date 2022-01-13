@@ -1,7 +1,7 @@
 package de.redfox.steckbrief.commands;
 
-import de.redfox.steckbrief.command.Command;
 import de.redfox.steckbrief.CreationManager;
+import de.redfox.steckbrief.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

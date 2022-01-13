@@ -26,6 +26,7 @@ public final class CreationManager implements Listener {
 	@EventHandler
 	public void onChat(@NotNull AsyncPlayerChatEvent event) {
 		if (instances.containsKey(event.getPlayer())) {
+			
 		}
 		
 	}

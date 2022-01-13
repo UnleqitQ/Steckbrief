@@ -1,5 +1,6 @@
 name: Steckbrief
 version: '${project.version}'
 main: de.redfox.steckbrief.Steckbrief
+load: STARTUP
 api-version: 1.18
 authors: [ UnleqitQ, Kevin ]
