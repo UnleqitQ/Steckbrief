@@ -59,6 +59,8 @@
         </plugins>
         <defaultGoal>clean package</defaultGoal>
         <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
+        <!--<directory>G:/Downloads 11/server18/plugins</directory>-->
+        <!--<outputDirectory>G:/Downloads 11/server18/plugins</outputDirectory>-->
 
         <resources>
             <resource>
