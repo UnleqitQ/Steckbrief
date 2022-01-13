@@ -4,8 +4,12 @@ import de.redfox.steckbrief.commands.SteckbriefCommand;
 import de.redfox.steckbrief.manager.config.ConfigManager;
 import de.redfox.steckbrief.manager.blindness.BlindnessListener;
 import de.redfox.steckbrief.manager.blindness.BlindnessManager;
+import de.redfox.steckbrief.utils.ReflectionSession;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.dedicated.DedicatedServer;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
+import org.bukkit.craftbukkit.v1_18_R1.CraftServer;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
@@ -22,6 +26,7 @@ public final class Steckbrief extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new BlindnessListener(), this);
 
 		BlindnessManager.init();
+
 
 	}
 
