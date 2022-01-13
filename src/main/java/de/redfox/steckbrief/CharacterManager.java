@@ -67,6 +67,7 @@ public final class CharacterManager implements Listener {
 			CharacterDescription character = characters.get(
 					players.get(player.getUniqueId()).characters.get(0));
 			player.setDisplayName(character.firstname + " " + character.lastname);
+			player.setPlayerListName(character.firstname + " " + character.lastname);
 			player.setCustomName(character.firstname + " " + character.lastname);
 			player.setCustomNameVisible(true);
 			player.sendMessage(
