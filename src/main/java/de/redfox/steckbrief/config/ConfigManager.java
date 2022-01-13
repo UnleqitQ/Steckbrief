@@ -1,5 +1,7 @@
 package de.redfox.steckbrief.config;
 
+import com.google.gson.JsonPrimitive;
+
 public class ConfigManager {
 	
 	public static ConfigObject data;
@@ -16,6 +18,9 @@ public class ConfigManager {
 		data = new ConfigObject(pluginPath, "data.json");
 		lang_de = new ConfigObject(pluginPath, "lang_de.json");
 		lang_en = new ConfigObject(pluginPath, "lang_en.json");
+
+		data.set("test.test2.test3", new JsonPrimitive("LOL"));
+		data.save();
 	}
 	
 }

@@ -7,8 +7,8 @@ import com.google.gson.JsonObject;
 public class JSONParser {
     private static Gson g = new Gson();
 
-    public static JsonElement parse(String json) {
-        return g.toJsonTree(json, String.class);
+    public static JsonObject parse(String json) {
+        return g.fromJson(json, JsonObject.class);
     }
 
     public static String toString(JsonObject e) {
