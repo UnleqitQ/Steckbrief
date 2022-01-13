@@ -2,7 +2,7 @@ package de.redfox.steckbrief;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import de.redfox.steckbrief.config.ConfigObject;
+import de.redfox.steckbrief.manager.config.ConfigObject;
 
 import java.util.ArrayList;
 import java.util.List;

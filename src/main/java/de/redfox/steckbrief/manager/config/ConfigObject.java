@@ -1,4 +1,4 @@
-package de.redfox.steckbrief.config;
+package de.redfox.steckbrief.manager.config;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

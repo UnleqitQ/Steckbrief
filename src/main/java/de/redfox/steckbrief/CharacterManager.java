@@ -1,7 +1,7 @@
 package de.redfox.steckbrief;
 
 import com.google.gson.JsonElement;
-import de.redfox.steckbrief.config.ConfigManager;
+import de.redfox.steckbrief.manager.config.ConfigManager;
 
 import java.util.HashMap;
 import java.util.Map;
