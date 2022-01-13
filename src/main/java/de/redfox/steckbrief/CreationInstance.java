@@ -1,6 +1,6 @@
 package de.redfox.steckbrief;
 
-import de.redfox.steckbrief.config.ConfigManager;
+import de.redfox.steckbrief.manager.config.ConfigManager;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
