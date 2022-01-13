@@ -1,5 +1,6 @@
 package de.redfox.steckbrief.config;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import de.redfox.steckbrief.utils.JSONParser;
 
@@ -22,14 +23,38 @@ public class ConfigObject {
 
     public ConfigObject(String path, String file) {
         this.path = Paths.get(path, file);
+        create();
         load();
     }
 
-    public void create() throws IOException {
+    public void set(String property, JsonElement value) {
+        String[] sections = property.split("\\.");
+
+        JsonObject currentObject = rootSection;
+        for (int i = 0; i < sections.length; i++) {
+            String sectionKey = sections[i];
+            JsonObject tempObject = currentObject.get(sectionKey).getAsJsonObject();
+            if (tempObject == null) {
+                tempObject = new JsonObject();
+                currentObject.add(sectionKey, tempObject);
+            }
+
+            currentObject = tempObject;
+            if (i == sections.length - 1) {
+                currentObject.add(sectionKey, value);
+            }
+        }
+    }
+
+    public void create() {
         file = new File(path.getParent().toUri());
         file.mkdirs();
         file = new File(path.toUri());
-        file.createNewFile();
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void load() {
