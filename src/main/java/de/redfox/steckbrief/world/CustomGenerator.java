@@ -3,6 +3,7 @@ package de.redfox.steckbrief.world;
 import de.redfox.steckbrief.utils.ReflectionSession;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.generator.WorldInfo;
@@ -14,6 +15,7 @@ public class CustomGenerator extends ChunkGenerator {
 
     public CustomGenerator() {
         WorldCreator a = new WorldCreator("test");
+        a.environment(World.Environment.THE_END);
         new ReflectionSession(a).setField("generator", this);
         Bukkit.createWorld(a);
     }
