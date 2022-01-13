@@ -16,6 +16,7 @@ public class CreationInstance {
 		this.player = player;
 		description = new CharacterDescription(UUID.randomUUID());
 		description.player = player.getUniqueId();
+		description.alive = true;
 		currentStep = Step.START;
 		nextStep();
 	}
@@ -32,7 +33,7 @@ public class CreationInstance {
 					player.sendMessage(ChatColor.RED + "Please Type in a valid Firstname (At most 20 characters)");
 					return;
 				}
-				description.firstname = input.substring(0, 0).toUpperCase() + input.substring(1).toLowerCase();
+				description.firstname = input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();
 			}
 			break;
 			case LASTNAME: {
@@ -45,7 +46,7 @@ public class CreationInstance {
 					player.sendMessage(ChatColor.RED + "Please Type in a valid Lastname (At most 20 characters)");
 					return;
 				}
-				description.lastname = input.substring(0, 0).toUpperCase() + input.substring(1).toLowerCase();
+				description.lastname = input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();
 			}
 			break;
 			case SEX: {
@@ -97,6 +98,7 @@ public class CreationInstance {
 	}
 	
 	public void save() {
+		description.firstJoin = System.currentTimeMillis();
 		CharacterManager.characters.put(description.uuid, description);
 		CharacterManager.saveCharacter(description.uuid);
 		CharacterManager.setPlayerCharacter(player.getUniqueId(), description.uuid);
