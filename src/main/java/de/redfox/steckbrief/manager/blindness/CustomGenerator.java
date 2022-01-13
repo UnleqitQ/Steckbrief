@@ -1,4 +1,4 @@
-package de.redfox.steckbrief.world;
+package de.redfox.steckbrief.manager.blindness;
 
 import de.redfox.steckbrief.utils.ReflectionSession;
 import org.bukkit.Bukkit;
@@ -11,13 +11,16 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class CustomGenerator extends ChunkGenerator {
+class CustomGenerator extends ChunkGenerator {
+    public World world;
 
     public CustomGenerator() {
         WorldCreator a = new WorldCreator("test");
         a.environment(World.Environment.THE_END);
+        a.generateStructures(false);
+
         new ReflectionSession(a).setField("generator", this);
-        Bukkit.createWorld(a);
+        world = Bukkit.createWorld(a);
     }
 
     @Override

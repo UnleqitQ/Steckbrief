@@ -8,6 +8,8 @@
 # IntelliJ
 out/
 
+NMS-Source
+
 pom.xml
 
 # Compiled class file

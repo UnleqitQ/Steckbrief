@@ -1,6 +1,5 @@
-package de.redfox.steckbrief.config;
+package de.redfox.steckbrief.manager.config;
 
-import com.google.gson.JsonNull;
 import com.google.gson.JsonPrimitive;
 
 public class ConfigManager {

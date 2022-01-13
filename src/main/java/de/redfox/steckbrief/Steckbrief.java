@@ -1,9 +1,9 @@
 package de.redfox.steckbrief;
 
 import de.redfox.steckbrief.commands.SteckbriefCommand;
-import de.redfox.steckbrief.config.ConfigManager;
-import de.redfox.steckbrief.events.MainListener;
-import de.redfox.steckbrief.world.CustomGenerator;
+import de.redfox.steckbrief.manager.config.ConfigManager;
+import de.redfox.steckbrief.manager.blindness.BlindnessListener;
+import de.redfox.steckbrief.manager.blindness.BlindnessManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -19,14 +19,14 @@ public final class Steckbrief extends JavaPlugin {
 		CharacterManager.loadCharacters();
 		CharacterManager.loadPlayers();
 		registerCommand("steckbrief", new SteckbriefCommand());
+		Bukkit.getPluginManager().registerEvents(new BlindnessListener(), this);
 
-		new CustomGenerator();
+		BlindnessManager.init();
 
 	}
 
 	@Override
 	public void onLoad() {
-		Bukkit.getPluginManager().registerEvents(new MainListener(), this);
 	}
 
 	@Override

@@ -1,7 +1,7 @@
 package de.redfox.steckbrief;
 
 import com.google.gson.JsonObject;
-import de.redfox.steckbrief.config.ConfigObject;
+import de.redfox.steckbrief.manager.config.ConfigObject;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
