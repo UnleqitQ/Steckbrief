@@ -2,19 +2,22 @@ package de.redfox.steckbrief;
 
 import com.google.gson.JsonElement;
 import de.redfox.steckbrief.manager.config.ConfigManager;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-public final class CharacterManager {
+public final class CharacterManager implements Listener {
 	
 	public static Map<UUID, CharacterDescription> characters = new HashMap<>();
 	
 	public static Map<UUID, PlayerInformation> players = new HashMap<>();
-	
-	private CharacterManager() {}
 	
 	public static void loadCharacters() {
 		Set<Map.Entry<String, JsonElement>> entries = ConfigManager.characters.rootSection.entrySet();
@@ -49,7 +52,29 @@ public final class CharacterManager {
 			information = new PlayerInformation(player);
 			players.put(player, information);
 		}
-		information.characters.add(character);
+		information.characters.add(0, character);
+	}
+	
+	public static boolean hasAliveCharacter(UUID player) {
+		return players.containsKey(player) && players.get(player).characters.size() > 0 && characters.get(
+				players.get(player).characters.get(0)).alive;
+	}
+	
+	@EventHandler
+	public void onJoin(PlayerJoinEvent event) {
+		Player player = event.getPlayer();
+		if (hasAliveCharacter(player.getUniqueId())) {
+			CharacterDescription character = characters.get(
+					players.get(player.getUniqueId()).characters.get(0));
+			player.setDisplayName(character.firstname + " " + character.lastname);
+			player.setCustomName(character.firstname + " " + character.lastname);
+			player.setCustomNameVisible(true);
+			player.sendMessage(
+					ChatColor.GREEN + "You joined as " + ChatColor.GOLD + character.firstname + " " + character.lastname);
+		}
+		else {
+		
+		}
 	}
 	
 }
