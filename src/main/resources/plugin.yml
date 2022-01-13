@@ -4,3 +4,7 @@ main: de.redfox.steckbrief.Steckbrief
 load: STARTUP
 api-version: 1.18
 authors: [ Kevin, UnleqitQ ]
+
+commands:
+  steckbrief:
+

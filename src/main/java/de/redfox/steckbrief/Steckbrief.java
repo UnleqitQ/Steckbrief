@@ -2,7 +2,9 @@ package de.redfox.steckbrief;
 
 import de.redfox.steckbrief.commands.SteckbriefCommand;
 import de.redfox.steckbrief.config.ConfigManager;
+import de.redfox.steckbrief.events.MainListener;
 import de.redfox.steckbrief.world.CustomGenerator;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -18,6 +20,8 @@ public final class Steckbrief extends JavaPlugin {
 		CharacterManager.loadPlayers();
 		registerCommand("steckbrief", new SteckbriefCommand());
 		new CustomGenerator();
+
+		Bukkit.getPluginManager().registerEvents(new MainListener(), this);
 	}
 	
 	@Override
