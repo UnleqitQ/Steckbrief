@@ -51,7 +51,7 @@ public class CreationInstance {
 			case SEX: {
 				input = input.replaceAll("\\W", "");
 				try {
-					description.sexuality = CharacterDescription.Sex.valueOf(input);
+					description.sexuality = CharacterDescription.Sex.valueOf(input.toUpperCase());
 				} catch (IllegalArgumentException e) {
 					player.sendMessage(ChatColor.RED + "Please Type in a valid sexuality (Male, Female, Diverse)");
 					return;
