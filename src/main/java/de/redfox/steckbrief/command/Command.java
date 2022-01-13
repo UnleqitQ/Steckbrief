@@ -1,4 +1,4 @@
-package de.redfox.command;
+package de.redfox.steckbrief.command;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;

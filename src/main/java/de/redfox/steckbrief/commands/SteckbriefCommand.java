@@ -1,6 +1,6 @@
 package de.redfox.steckbrief.commands;
 
-import de.redfox.command.Command;
+import de.redfox.steckbrief.command.Command;
 
 public class SteckbriefCommand extends Command {
 	
