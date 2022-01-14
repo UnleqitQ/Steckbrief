@@ -43,7 +43,7 @@ public class IdentityCardMap extends MapRenderer {
 	
 	public void drawHead(Graphics2D g) {
 		BufferedImage image = getHead();
-		g.drawImage(image, 0, 16, 43, 43, null);
+		g.drawImage(image, 0, 16, 32, 32, null);
 	}
 	
 	public void drawLastName(Graphics2D g) {
