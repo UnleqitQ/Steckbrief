@@ -80,7 +80,7 @@ public class InfoCommand extends Command {
 					player -> l.add(player.getName()));
 			CharacterManager.characters.forEach((uuid, character) -> {
 				if (character.firstname.toLowerCase().contains(args[0].toLowerCase()))
-					l.add(character.firstname);
+					l.add(character.firstname + " " + character.lastname);
 			});
 		}
 		if (args.length == 2) {
