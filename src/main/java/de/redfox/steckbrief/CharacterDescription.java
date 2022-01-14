@@ -3,10 +3,7 @@ package de.redfox.steckbrief;
 import com.google.gson.JsonObject;
 import de.redfox.steckbrief.manager.config.ConfigObject;
 import de.redfox.steckbrief.utils.IdentityCardMap;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
+import org.bukkit.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.MapMeta;
@@ -188,6 +185,8 @@ public class CharacterDescription {
 		MapMeta meta = (MapMeta) map.getItemMeta();
 		meta.setMapView(getMapView());
 		meta.getPersistentDataContainer().set(cardKey, PersistentDataType.STRING, uuid.toString());
+		meta.setColor(Color.GRAY);
+		meta.setDisplayName(ChatColor.DARK_PURPLE + "Identity Card");
 		map.setItemMeta(meta);
 		return map;
 	}
