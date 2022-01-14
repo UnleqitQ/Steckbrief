@@ -2,18 +2,23 @@ package de.redfox.steckbrief;
 
 import com.google.gson.JsonElement;
 import de.redfox.steckbrief.manager.config.ConfigManager;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-public final class CharacterManager implements Listener {
+public final class CharacterManager implements Listener, Runnable {
 	
 	public static Map<UUID, CharacterDescription> characters = new HashMap<>();
 	public static Map<String, UUID> characterNames = new HashMap<>();
@@ -84,7 +89,28 @@ public final class CharacterManager implements Listener {
 					ChatColor.GREEN + "You joined as " + ChatColor.GOLD + character.firstname + " " + character.lastname);
 		}
 		else {
-		
+			
+		}
+	}
+	
+	public void updateInventory(Inventory inventory) {
+		for (ItemStack item : inventory.all(Material.PAPER).values()) {
+			try {
+				UUID characterUuid = UUID.fromString(
+						item.getItemMeta().getPersistentDataContainer().get(CharacterDescription.cardKey,
+								PersistentDataType.STRING));
+				CharacterDescription character = characters.get(characterUuid);
+				character.updateIdentityCard(item);
+			} catch (Exception e) {
+			}
+		}
+	}
+	
+	@Override
+	public void run() {
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			updateInventory(player.getInventory());
+			updateInventory(player.getOpenInventory().getTopInventory());
 		}
 	}
 	

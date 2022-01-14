@@ -9,6 +9,8 @@ public class RoleplayCommand extends Command {
 		register(new CreateCommand());
 		register(new LeaveCommand());
 		register(new InfoCommand());
+		register(new CardCommand());
+		register(new ReloadCommand());
 	}
 	
 }

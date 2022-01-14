@@ -2,7 +2,15 @@ package de.redfox.steckbrief;
 
 import com.google.gson.JsonObject;
 import de.redfox.steckbrief.manager.config.ConfigObject;
+import de.redfox.steckbrief.utils.IdentityCardMap;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.MapMeta;
+import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
@@ -12,6 +20,8 @@ import java.util.List;
 import java.util.UUID;
 
 public class CharacterDescription {
+	
+	public static final NamespacedKey cardKey = new NamespacedKey(Steckbrief.getInstance(), "character");
 	
 	public final UUID uuid;
 	public UUID player;
@@ -133,6 +143,39 @@ public class CharacterDescription {
 			l.add("Death: " + format.format(new Date(deathTime)));
 		}
 		return l;
+	}
+	
+	public ItemStack updateIdentityCard0(ItemStack item) {
+		ItemMeta meta = item.getItemMeta();
+		meta.setDisplayName(ChatColor.DARK_PURPLE + "Identity Card");
+		meta.setLore(getDescription(false));
+		meta.getPersistentDataContainer().set(cardKey, PersistentDataType.STRING, uuid.toString());
+		item.setItemMeta(meta);
+		return item;
+	}
+	
+	public ItemStack getIdentityCard0() {
+		return updateIdentityCard0(new ItemStack(Material.PAPER));
+	}
+	
+	public ItemStack updateIdentityCard(ItemStack item) {
+		ItemMeta meta = item.getItemMeta();
+		
+		meta.setDisplayName(ChatColor.DARK_PURPLE + "Identity Card");
+		meta.setLore(getDescription(false));
+		meta.getPersistentDataContainer().set(cardKey, PersistentDataType.STRING, uuid.toString());
+		item.setItemMeta(meta);
+		return item;
+	}
+	
+	public ItemStack getIdentityCard() {
+		ItemStack map = new ItemStack(Material.FILLED_MAP);
+		MapMeta meta = (MapMeta) map.getItemMeta();
+		
+		meta.getPersistentDataContainer().set(cardKey, PersistentDataType.STRING, uuid.toString());
+		map.setItemMeta(meta);
+		IdentityCardMap.update(map);
+		return map;
 	}
 	
 }
