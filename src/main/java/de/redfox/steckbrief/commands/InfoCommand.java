@@ -8,7 +8,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 public class InfoCommand extends Command {
@@ -67,6 +69,28 @@ public class InfoCommand extends Command {
 			sender.sendMessage("Please use /roleplay info <player> or");
 			sender.sendMessage("Please use /roleplay info <firstname> <lastname>");
 		}
+	}
+	
+	@Override
+	public List<String> tab(CommandSender sender, String[] args) {
+		List<String> l = new ArrayList<>();
+		if (args.length == 1) {
+			Arrays.stream(Bukkit.getOfflinePlayers()).filter(
+					player -> player.getName().toLowerCase().contains(args[0].toLowerCase())).forEach(
+					player -> l.add(player.getName()));
+			CharacterManager.characters.forEach((uuid, character) -> {
+				if (character.firstname.toLowerCase().contains(args[0].toLowerCase()))
+					l.add(character.firstname);
+			});
+		}
+		if (args.length == 2) {
+			CharacterManager.characters.forEach((uuid, character) -> {
+				if (character.firstname.equalsIgnoreCase(args[0]) && character.lastname.toLowerCase().contains(
+						args[1].toLowerCase()))
+					l.add(character.lastname);
+			});
+		}
+		return l;
 	}
 	
 }
