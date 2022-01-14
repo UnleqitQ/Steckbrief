@@ -27,9 +27,9 @@ public final class CreationManager implements Listener {
 	@EventHandler (priority = EventPriority.HIGHEST)
 	public void onChat(@NotNull AsyncPlayerChatEvent event) {
 		if (instances.containsKey(event.getPlayer())) {
+			event.setCancelled(true);
 			CreationInstance instance = instances.get(event.getPlayer());
 			instance.input(event.getMessage());
-			event.setCancelled(true);
 		}
 	}
 	

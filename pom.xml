@@ -79,6 +79,10 @@
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
+        <repository>
+            <id>leoko-dev</id>
+            <url>https://repo.leoko.dev/releases</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -99,6 +103,12 @@
             <artifactId>annotations</artifactId>
             <version>RELEASE</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>me.leoko.advancedgui</groupId>
+            <artifactId>AdvancedGUI</artifactId>
+            <version>2.1.0</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

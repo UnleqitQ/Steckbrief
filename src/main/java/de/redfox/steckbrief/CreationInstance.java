@@ -111,15 +111,13 @@ public class CreationInstance {
 		CharacterManager.savePlayer(player.getUniqueId());
 		ConfigManager.characters.save();
 		ConfigManager.players.save();
+		description.updateMapView();
+		player.sendMessage(ChatColor.GREEN + "Your character was created");
+		player.sendMessage(ChatColor.GREEN + "Please rejoin");
 	}
 	
 	public enum Step {
-		CONFIRM(null),
-		AGE(null),
-		SEX(AGE),
-		LASTNAME(SEX),
-		FIRSTNAME(LASTNAME),
-		START(FIRSTNAME);
+		CONFIRM(null), AGE(null), SEX(AGE), LASTNAME(SEX), FIRSTNAME(LASTNAME), START(FIRSTNAME);
 		
 		private final Step nextStep;
 		

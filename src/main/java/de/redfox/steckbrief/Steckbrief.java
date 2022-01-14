@@ -1,7 +1,6 @@
 package de.redfox.steckbrief;
 
 import de.redfox.steckbrief.commands.RoleplayCommand;
-import de.redfox.steckbrief.manager.blindness.BlindnessListener;
 import de.redfox.steckbrief.manager.blindness.BlindnessManager;
 import de.redfox.steckbrief.manager.config.ConfigManager;
 import org.bukkit.Bukkit;
@@ -12,6 +11,16 @@ import java.util.Objects;
 
 public final class Steckbrief extends JavaPlugin {
 	
+	private static Steckbrief instance;
+	
+	public Steckbrief() {
+		instance = this;
+	}
+	
+	public static Steckbrief getInstance() {
+		return instance;
+	}
+	
 	@Override
 	public void onEnable() {
 		// Plugin startup logic
@@ -21,7 +30,9 @@ public final class Steckbrief extends JavaPlugin {
 		registerCommand("roleplay", new RoleplayCommand());
 		//Bukkit.getPluginManager().registerEvents(new BlindnessListener(), this);
 		Bukkit.getPluginManager().registerEvents(new CreationManager(), this);
-		Bukkit.getPluginManager().registerEvents(new CharacterManager(), this);
+		CharacterManager manager = new CharacterManager();
+		Bukkit.getPluginManager().registerEvents(manager, this);
+		Bukkit.getScheduler().runTaskTimer(this, manager, 20, 40);
 		
 		BlindnessManager.init();
 		

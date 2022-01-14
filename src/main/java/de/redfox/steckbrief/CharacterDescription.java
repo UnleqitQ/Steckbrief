@@ -2,7 +2,13 @@ package de.redfox.steckbrief;
 
 import com.google.gson.JsonObject;
 import de.redfox.steckbrief.manager.config.ConfigObject;
-import org.bukkit.Bukkit;
+import de.redfox.steckbrief.utils.IdentityCardMap;
+import org.bukkit.*;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.MapMeta;
+import org.bukkit.map.MapView;
+import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
@@ -13,6 +19,8 @@ import java.util.UUID;
 
 public class CharacterDescription {
 	
+	public static final NamespacedKey cardKey = new NamespacedKey(Steckbrief.getInstance(), "character");
+	
 	public final UUID uuid;
 	public UUID player;
 	public String firstname;
@@ -22,9 +30,21 @@ public class CharacterDescription {
 	public long firstJoin;
 	public long deathTime;
 	public boolean alive;
+	public MapView mapView;
 	
 	public CharacterDescription(UUID uuid) {
 		this.uuid = uuid;
+	}
+	
+	public MapView getMapView() {
+		if (mapView == null)
+			mapView = Bukkit.createMap(Bukkit.getWorlds().get(0));
+		return mapView;
+	}
+	
+	public void updateMapView() {
+		getMapView().getRenderers().forEach(mapRenderer -> mapView.removeRenderer(mapRenderer));
+		getMapView().addRenderer(new IdentityCardMap(this));
 	}
 	
 	public enum Sex {
@@ -91,6 +111,7 @@ public class CharacterDescription {
 		config.addProperty("firstJoin", firstJoin);
 		config.addProperty("alive", alive);
 		config.addProperty("deathTime", deathTime);
+		config.addProperty("map", getMapView().getId());
 		configObject.rootSection.add(uuid.toString(), config);
 	}
 	
@@ -106,6 +127,7 @@ public class CharacterDescription {
 		characterDescription.firstJoin = config.get("firstJoin").getAsLong();
 		characterDescription.deathTime = config.get("deathTime").getAsLong();
 		characterDescription.alive = config.get("alive").getAsBoolean();
+		characterDescription.mapView = Bukkit.getMap(config.get("map").getAsInt());
 		return characterDescription;
 	}
 	
@@ -129,6 +151,40 @@ public class CharacterDescription {
 			l.add("Death: " + format.format(new Date(deathTime)));
 		}
 		return l;
+	}
+	
+	public ItemStack updateIdentityCard0(ItemStack item) {
+		ItemMeta meta = item.getItemMeta();
+		meta.setDisplayName(ChatColor.DARK_PURPLE + "Identity Card");
+		meta.setLore(getDescription(false));
+		meta.getPersistentDataContainer().set(cardKey, PersistentDataType.STRING, uuid.toString());
+		item.setItemMeta(meta);
+		return item;
+	}
+	
+	public ItemStack getIdentityCard() {
+		return updateIdentityCard(new ItemStack(Material.PAPER));
+	}
+	
+	public ItemStack updateIdentityCard(ItemStack item) {
+		ItemMeta meta = item.getItemMeta();
+		
+		meta.setDisplayName(ChatColor.DARK_PURPLE + "Identity Card");
+		meta.setLore(getDescription(false));
+		meta.getPersistentDataContainer().set(cardKey, PersistentDataType.STRING, uuid.toString());
+		item.setItemMeta(meta);
+		return item;
+	}
+	
+	public ItemStack getIdentityMap() {
+		ItemStack map = new ItemStack(Material.FILLED_MAP);
+		MapMeta meta = (MapMeta) map.getItemMeta();
+		meta.setMapView(getMapView());
+		meta.getPersistentDataContainer().set(cardKey, PersistentDataType.STRING, uuid.toString());
+		meta.setColor(Color.GRAY);
+		meta.setDisplayName(ChatColor.DARK_PURPLE + "Identity Card");
+		map.setItemMeta(meta);
+		return map;
 	}
 	
 }
