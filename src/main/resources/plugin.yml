@@ -3,8 +3,8 @@ version: '${project.version}'
 main: de.redfox.steckbrief.Steckbrief
 api-version: 1.18
 authors: [ Kevin, UnleqitQ ]
-depend:
-  - AdvancedGui
+#depend:
+#  - AdvancedGui
 
 commands:
   roleplay:

@@ -1,6 +1,7 @@
 package de.redfox.steckbrief;
 
 import com.google.gson.JsonObject;
+import de.redfox.steckbrief.manager.config.ConfigManager;
 import de.redfox.steckbrief.manager.config.ConfigObject;
 import de.redfox.steckbrief.utils.IdentityCardMap;
 import org.bukkit.*;
@@ -102,6 +103,7 @@ public class CharacterDescription {
 	
 	public void save(@NotNull ConfigObject configObject) {
 		JsonObject config = new JsonObject();
+
 		config.addProperty("uuid", uuid.toString());
 		config.addProperty("player", player.toString());
 		config.addProperty("firstname", firstname);

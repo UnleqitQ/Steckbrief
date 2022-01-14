@@ -104,6 +104,7 @@
             <version>RELEASE</version>
             <scope>compile</scope>
         </dependency>
+
         <dependency>
             <groupId>me.leoko.advancedgui</groupId>
             <artifactId>AdvancedGUI</artifactId>
