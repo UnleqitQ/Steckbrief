@@ -47,6 +47,11 @@ public class CreationInstance {
 					return;
 				}
 				description.lastname = input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();
+				if (CharacterManager.characterNames.containsKey(description.getName())) {
+					player.sendMessage(ChatColor.RED + "This name already exists");
+					player.sendMessage(ChatColor.RED + "Please start again");
+					currentStep = Step.START;
+				}
 			}
 			break;
 			case SEX: {
@@ -100,6 +105,7 @@ public class CreationInstance {
 	public void save() {
 		description.firstJoin = System.currentTimeMillis();
 		CharacterManager.characters.put(description.uuid, description);
+		CharacterManager.characterNames.put(description.getName(), description.uuid);
 		CharacterManager.saveCharacter(description.uuid);
 		CharacterManager.setPlayerCharacter(player.getUniqueId(), description.uuid);
 		CharacterManager.savePlayer(player.getUniqueId());

@@ -16,7 +16,7 @@ import java.util.UUID;
 public final class CharacterManager implements Listener {
 	
 	public static Map<UUID, CharacterDescription> characters = new HashMap<>();
-	
+	public static Map<String, UUID> characterNames = new HashMap<>();
 	public static Map<UUID, PlayerInformation> players = new HashMap<>();
 	
 	public static void loadCharacters() {
@@ -24,6 +24,7 @@ public final class CharacterManager implements Listener {
 		for (Map.Entry<String, JsonElement> entry : entries) {
 			CharacterDescription characterDescription = CharacterDescription.load(entry.getValue().getAsJsonObject());
 			characters.put(characterDescription.uuid, characterDescription);
+			characterNames.put(characterDescription.getName(), characterDescription.uuid);
 		}
 	}
 	
@@ -53,6 +54,15 @@ public final class CharacterManager implements Listener {
 			players.put(player, information);
 		}
 		information.characters.add(0, character);
+	}
+	
+	public static PlayerInformation getPlayer(UUID player) {
+		PlayerInformation information = players.get(player);
+		if (information == null) {
+			information = new PlayerInformation(player);
+			players.put(player, information);
+		}
+		return information;
 	}
 	
 	public static boolean hasAliveCharacter(UUID player) {
