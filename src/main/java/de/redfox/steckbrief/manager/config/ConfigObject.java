@@ -27,14 +27,16 @@ public class ConfigObject {
 		create();
 		load();
 	}
-	
-	public void set(String property, JsonElement value) {
+
+	private void set(String property, JsonElement value, boolean overwrite) {
 		String[] sections = property.split("\\.");
-		
+
 		JsonObject currentObject = rootSection;
 		for (int i = 0; i < sections.length; i++) {
 			String sectionKey = sections[i];
 			if (i == sections.length - 1) {
+				if (currentObject.get(sectionKey) != null && !overwrite)
+					return;
 				currentObject.add(sectionKey, value);
 				break;
 			}
@@ -45,9 +47,17 @@ public class ConfigObject {
 				tempObject = new JsonObject();
 				currentObject.add(sectionKey, tempObject);
 			}
-			
+
 			currentObject = tempObject.getAsJsonObject();
 		}
+	}
+
+	public void set(String property, JsonElement value) {
+		this.set(property, value, true);
+	}
+
+	public void setDefault(String property, JsonElement value) {
+		this.set(property, value, false);
 	}
 	
 	public void create() {
