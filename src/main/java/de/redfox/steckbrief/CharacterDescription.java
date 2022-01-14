@@ -44,10 +44,11 @@ public class CharacterDescription {
 	public String getName() {
 		return firstname + " " + lastname;
 	}
-	
-	public int[] getTimeSinceJoin() {
-		long current = System.currentTimeMillis();
-		long difference = current - firstJoin;
+
+	/**
+	 * Assume a > b
+	 */
+	private int[] getTimeOfDifference(long difference) {
 		int totalSeconds = (int) (difference / 1000);
 		int totalMinutes = totalSeconds / 60;
 		int totalHours = totalMinutes / 60;
@@ -58,17 +59,12 @@ public class CharacterDescription {
 		return new int[]{seconds, minutes, hours, days, totalSeconds, totalMinutes, totalHours};
 	}
 	
+	public int[] getTimeSinceJoin() {
+		return getTimeOfDifference(System.currentTimeMillis() - firstJoin);
+	}
+	
 	public int[] getTimeDeathJoin() {
-		long current = deathTime;
-		long difference = current - firstJoin;
-		int totalSeconds = (int) (difference / 1000);
-		int totalMinutes = totalSeconds / 60;
-		int totalHours = totalMinutes / 60;
-		int days = totalHours / 24;
-		int seconds = totalSeconds % 60;
-		int minutes = totalMinutes % 60;
-		int hours = totalHours % 24;
-		return new int[]{seconds, minutes, hours, days, totalSeconds, totalMinutes, totalHours};
+		return getTimeOfDifference(deathTime - firstJoin);
 	}
 	
 	public int getAge() {
