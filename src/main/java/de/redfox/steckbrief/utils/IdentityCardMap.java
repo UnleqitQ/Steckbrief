@@ -43,27 +43,27 @@ public class IdentityCardMap extends MapRenderer {
 	
 	public void drawHead(Graphics2D g) {
 		BufferedImage image = getHead();
-		g.drawImage(image, 0, 16, 32, 32, null);
+		g.drawImage(image, 0, 16, 43, 43, null);
 	}
 	
 	public void drawLastName(Graphics2D g) {
 		g.setColor(java.awt.Color.BLACK);
-		g.drawString(character.lastname, 32, 20);
+		g.drawString(character.lastname, 32, 28);
 	}
 	
 	public void drawFirstName(Graphics2D g) {
 		g.setColor(java.awt.Color.BLACK);
-		g.drawString(character.firstname, 32, 36);
+		g.drawString(character.firstname, 32, 52);
 	}
 	
 	public void drawAge(Graphics2D g) {
 		g.setColor(java.awt.Color.BLACK);
-		g.drawString("Age: " + character.getAge(), 32, 52);
+		g.drawString("Age: " + character.getAge(), 8, 76);
 	}
 	
 	public void drawSex(Graphics2D g) {
 		g.setColor(java.awt.Color.BLACK);
-		g.drawString("Sex: " + character.sexuality.getDisplay(), 32, 68);
+		g.drawString("Sex: " + character.sexuality.getDisplay(), 8, 100);
 	}
 	
 	
@@ -71,7 +71,7 @@ public class IdentityCardMap extends MapRenderer {
 	public void render(@NotNull MapView map, @NotNull MapCanvas canvas, @NotNull Player player) {
 		BufferedImage image = new BufferedImage(128, 128, BufferedImage.TYPE_4BYTE_ABGR);
 		Graphics2D g = image.createGraphics();
-		g.setFont(new Font("", Font.PLAIN, 12));
+		g.setFont(new Font("", Font.PLAIN, 10));
 		drawBackground(g);
 		drawHead(g);
 		drawLastName(g);
