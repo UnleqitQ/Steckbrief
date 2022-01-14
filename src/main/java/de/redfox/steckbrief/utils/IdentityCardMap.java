@@ -1,61 +1,29 @@
 package de.redfox.steckbrief.utils;
 
 import de.redfox.steckbrief.CharacterDescription;
-import de.redfox.steckbrief.CharacterManager;
 import org.bukkit.Bukkit;
-import org.bukkit.Color;
-import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.MapMeta;
 import org.bukkit.map.MapCanvas;
 import org.bukkit.map.MapRenderer;
 import org.bukkit.map.MapView;
-import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
-import java.util.UUID;
 import java.util.logging.Level;
 
-public class IdentityCardMap extends MapRenderer implements MapView {
+public class IdentityCardMap extends MapRenderer {
 	//https://visage.surgeplay.com/head/%UUID_U%
 	
 	CharacterDescription character;
 	BufferedImage head = null;
-	long lastUpdate = System.currentTimeMillis();
+	long lastUpdate = 0;
 	
 	public IdentityCardMap(CharacterDescription character) {
 		this.character = character;
-	}
-	
-	public static void update(@NotNull ItemStack item) {
-		if (item.getType() != Material.FILLED_MAP)
-			return;
-		ItemMeta meta = item.getItemMeta();
-		if (meta == null)
-			return;
-		if (!meta.getPersistentDataContainer().has(CharacterDescription.cardKey, PersistentDataType.STRING))
-			return;
-		UUID characterUuid = UUID.fromString(
-				meta.getPersistentDataContainer().get(CharacterDescription.cardKey, PersistentDataType.STRING));
-		CharacterDescription character = CharacterManager.characters.get(characterUuid);
-		MapMeta mapMeta = (MapMeta) meta;
-		//mapMeta.setMapView(Bukkit.getMap(0));
-		mapMeta.setColor(Color.GRAY);
-		mapMeta.setLocationName("ID");
-		mapMeta.setMapId(0);
-		mapMeta.getMapView().getRenderers().forEach(mapRenderer -> mapMeta.getMapView().removeRenderer(mapRenderer));
-		mapMeta.getMapView().addRenderer(new IdentityCardMap(character));
-		item.setItemMeta(mapMeta);
 	}
 	
 	private BufferedImage getHead() {
@@ -114,102 +82,5 @@ public class IdentityCardMap extends MapRenderer implements MapView {
 		canvas.drawImage(0, 0, image);
 	}
 	
-	@Override
-	public int getId() {
-		return 128;
-	}
-	
-	@Override
-	public boolean isVirtual() {
-		return true;
-	}
-	
-	@NotNull
-	@Override
-	public Scale getScale() {
-		return Scale.CLOSEST;
-	}
-	
-	@Override
-	public void setScale(@NotNull MapView.Scale scale) {
-	
-	}
-	
-	@Override
-	public int getCenterX() {
-		return 0;
-	}
-	
-	@Override
-	public int getCenterZ() {
-		return 0;
-	}
-	
-	@Override
-	public void setCenterX(int x) {
-	
-	}
-	
-	@Override
-	public void setCenterZ(int z) {
-	
-	}
-	
-	@Nullable
-	@Override
-	public World getWorld() {
-		return Bukkit.getWorlds().get(0);
-	}
-	
-	@Override
-	public void setWorld(@NotNull World world) {
-	
-	}
-	
-	@NotNull
-	@Override
-	public List<MapRenderer> getRenderers() {
-		return List.of(this);
-	}
-	
-	@Override
-	public void addRenderer(@NotNull MapRenderer renderer) {
-	
-	}
-	
-	@Override
-	public boolean removeRenderer(@Nullable MapRenderer renderer) {
-		return false;
-	}
-	
-	@Override
-	public boolean isTrackingPosition() {
-		return false;
-	}
-	
-	@Override
-	public void setTrackingPosition(boolean trackingPosition) {
-	
-	}
-	
-	@Override
-	public boolean isUnlimitedTracking() {
-		return false;
-	}
-	
-	@Override
-	public void setUnlimitedTracking(boolean unlimited) {
-	
-	}
-	
-	@Override
-	public boolean isLocked() {
-		return true;
-	}
-	
-	@Override
-	public void setLocked(boolean locked) {
-	
-	}
 	
 }

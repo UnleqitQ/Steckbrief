@@ -9,10 +9,10 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CardCommand extends Command {
+public class IdMapCommand extends Command {
 	
-	public CardCommand() {
-		super("card");
+	public IdMapCommand() {
+		super("idmap");
 	}
 	
 	@Override
@@ -27,7 +27,7 @@ public class CardCommand extends Command {
 				if (CharacterManager.characterNames.containsKey(name)) {
 					CharacterDescription character = CharacterManager.characters.get(
 							CharacterManager.characterNames.get(name));
-					((Player) sender).getInventory().addItem(character.getIdentityCard());
+					((Player) sender).getInventory().addItem(character.getIdentityMap());
 				}
 				else {
 					sender.sendMessage("Character does not exist");

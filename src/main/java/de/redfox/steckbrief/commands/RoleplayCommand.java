@@ -5,11 +5,12 @@ import de.redfox.steckbrief.command.Command;
 public class RoleplayCommand extends Command {
 	
 	public RoleplayCommand() {
-		super("roleplay");
+		super("rp");
 		register(new CreateCommand());
 		register(new LeaveCommand());
 		register(new InfoCommand());
-		register(new CardCommand());
+		register(new IdCardCommand());
+		register(new IdMapCommand());
 		register(new ReloadCommand());
 	}
 	

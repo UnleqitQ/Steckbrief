@@ -10,6 +10,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.MapMeta;
+import org.bukkit.map.MapView;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
@@ -32,9 +33,21 @@ public class CharacterDescription {
 	public long firstJoin;
 	public long deathTime;
 	public boolean alive;
+	public MapView mapView;
 	
 	public CharacterDescription(UUID uuid) {
 		this.uuid = uuid;
+	}
+	
+	public MapView getMapView() {
+		if (mapView == null)
+			mapView = Bukkit.createMap(Bukkit.getWorlds().get(0));
+		return mapView;
+	}
+	
+	public void updateMapView() {
+		getMapView().getRenderers().forEach(mapRenderer -> mapView.removeRenderer(mapRenderer));
+		getMapView().addRenderer(new IdentityCardMap(this));
 	}
 	
 	public enum Sex {
@@ -105,6 +118,7 @@ public class CharacterDescription {
 		config.addProperty("firstJoin", firstJoin);
 		config.addProperty("alive", alive);
 		config.addProperty("deathTime", deathTime);
+		config.addProperty("map", mapView.getId());
 		configObject.rootSection.add(uuid.toString(), config);
 	}
 	
@@ -120,6 +134,7 @@ public class CharacterDescription {
 		characterDescription.firstJoin = config.get("firstJoin").getAsLong();
 		characterDescription.deathTime = config.get("deathTime").getAsLong();
 		characterDescription.alive = config.get("alive").getAsBoolean();
+		characterDescription.mapView = Bukkit.getMap(config.get("map").getAsInt());
 		return characterDescription;
 	}
 	
@@ -154,8 +169,8 @@ public class CharacterDescription {
 		return item;
 	}
 	
-	public ItemStack getIdentityCard0() {
-		return updateIdentityCard0(new ItemStack(Material.PAPER));
+	public ItemStack getIdentityCard() {
+		return updateIdentityCard(new ItemStack(Material.PAPER));
 	}
 	
 	public ItemStack updateIdentityCard(ItemStack item) {
@@ -168,13 +183,12 @@ public class CharacterDescription {
 		return item;
 	}
 	
-	public ItemStack getIdentityCard() {
+	public ItemStack getIdentityMap() {
 		ItemStack map = new ItemStack(Material.FILLED_MAP);
 		MapMeta meta = (MapMeta) map.getItemMeta();
-		
+		meta.setMapView(mapView);
 		meta.getPersistentDataContainer().set(cardKey, PersistentDataType.STRING, uuid.toString());
 		map.setItemMeta(meta);
-		IdentityCardMap.update(map);
 		return map;
 	}
 	
