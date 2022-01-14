@@ -118,7 +118,7 @@ public class CharacterDescription {
 		config.addProperty("firstJoin", firstJoin);
 		config.addProperty("alive", alive);
 		config.addProperty("deathTime", deathTime);
-		config.addProperty("map", mapView.getId());
+		config.addProperty("map", getMapView().getId());
 		configObject.rootSection.add(uuid.toString(), config);
 	}
 	
@@ -186,7 +186,7 @@ public class CharacterDescription {
 	public ItemStack getIdentityMap() {
 		ItemStack map = new ItemStack(Material.FILLED_MAP);
 		MapMeta meta = (MapMeta) map.getItemMeta();
-		meta.setMapView(mapView);
+		meta.setMapView(getMapView());
 		meta.getPersistentDataContainer().set(cardKey, PersistentDataType.STRING, uuid.toString());
 		map.setItemMeta(meta);
 		return map;

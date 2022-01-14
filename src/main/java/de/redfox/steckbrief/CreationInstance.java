@@ -99,6 +99,10 @@ public class CreationInstance {
 			case LASTNAME -> player.sendMessage(ChatColor.GREEN + "Please type in your Lastname");
 			case SEX -> player.sendMessage(ChatColor.GREEN + "Please type in your Sexuality (Male, Female, Diverse)");
 			case AGE -> player.sendMessage(ChatColor.GREEN + "Please type in your Age");
+			default -> {
+				player.sendMessage(ChatColor.GREEN + "Your character was created");
+				player.sendMessage(ChatColor.GREEN + "Please rejoin");
+			}
 		}
 	}
 	
@@ -114,12 +118,7 @@ public class CreationInstance {
 	}
 	
 	public enum Step {
-		CONFIRM(null),
-		AGE(null),
-		SEX(AGE),
-		LASTNAME(SEX),
-		FIRSTNAME(LASTNAME),
-		START(FIRSTNAME);
+		CONFIRM(null), AGE(null), SEX(AGE), LASTNAME(SEX), FIRSTNAME(LASTNAME), START(FIRSTNAME);
 		
 		private final Step nextStep;
 		
