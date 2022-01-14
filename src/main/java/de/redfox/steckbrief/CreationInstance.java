@@ -99,10 +99,6 @@ public class CreationInstance {
 			case LASTNAME -> player.sendMessage(ChatColor.GREEN + "Please type in your Lastname");
 			case SEX -> player.sendMessage(ChatColor.GREEN + "Please type in your Sexuality (Male, Female, Diverse)");
 			case AGE -> player.sendMessage(ChatColor.GREEN + "Please type in your Age");
-			default -> {
-				player.sendMessage(ChatColor.GREEN + "Your character was created");
-				player.sendMessage(ChatColor.GREEN + "Please rejoin");
-			}
 		}
 	}
 	
@@ -115,6 +111,9 @@ public class CreationInstance {
 		CharacterManager.savePlayer(player.getUniqueId());
 		ConfigManager.characters.save();
 		ConfigManager.players.save();
+		description.updateMapView();
+		player.sendMessage(ChatColor.GREEN + "Your character was created");
+		player.sendMessage(ChatColor.GREEN + "Please rejoin");
 	}
 	
 	public enum Step {

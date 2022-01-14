@@ -30,6 +30,7 @@ public final class CharacterManager implements Listener, Runnable {
 			CharacterDescription characterDescription = CharacterDescription.load(entry.getValue().getAsJsonObject());
 			characters.put(characterDescription.uuid, characterDescription);
 			characterNames.put(characterDescription.getName(), characterDescription.uuid);
+			characterDescription.updateMapView();
 		}
 	}
 	
