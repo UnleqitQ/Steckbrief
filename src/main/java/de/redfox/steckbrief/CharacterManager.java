@@ -16,7 +16,7 @@ import java.util.UUID;
 public final class CharacterManager implements Listener {
 	
 	public static Map<UUID, CharacterDescription> characters = new HashMap<>();
-	
+	public static Map<String, UUID> characterNames = new HashMap<>();
 	public static Map<UUID, PlayerInformation> players = new HashMap<>();
 	
 	public static void loadCharacters() {
@@ -24,6 +24,7 @@ public final class CharacterManager implements Listener {
 		for (Map.Entry<String, JsonElement> entry : entries) {
 			CharacterDescription characterDescription = CharacterDescription.load(entry.getValue().getAsJsonObject());
 			characters.put(characterDescription.uuid, characterDescription);
+			characterNames.put(characterDescription.getName(), characterDescription.uuid);
 		}
 	}
 	
@@ -55,6 +56,15 @@ public final class CharacterManager implements Listener {
 		information.characters.add(0, character);
 	}
 	
+	public static PlayerInformation getPlayer(UUID player) {
+		PlayerInformation information = players.get(player);
+		if (information == null) {
+			information = new PlayerInformation(player);
+			players.put(player, information);
+		}
+		return information;
+	}
+	
 	public static boolean hasAliveCharacter(UUID player) {
 		return players.containsKey(player) && players.get(player).characters.size() > 0 && characters.get(
 				players.get(player).characters.get(0)).alive;
@@ -64,11 +74,11 @@ public final class CharacterManager implements Listener {
 	public void onJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
 		if (hasAliveCharacter(player.getUniqueId())) {
-			CharacterDescription character = characters.get(
-					players.get(player.getUniqueId()).characters.get(0));
-			player.setDisplayName(character.firstname + " " + character.lastname);
-			player.setPlayerListName(character.firstname + " " + character.lastname);
-			player.setCustomName(character.firstname + " " + character.lastname);
+			CharacterDescription character = characters.get(players.get(player.getUniqueId()).characters.get(0));
+			player.setDisplayName(ChatColor.BLUE + character.firstname + " " + character.lastname + ChatColor.WHITE);
+			player.setPlayerListName(
+					ChatColor.BLUE + character.firstname + " " + character.lastname + ChatColor.GRAY + " (" + player.getName() + ")");
+			player.setCustomName(ChatColor.BLUE + character.firstname + " " + character.lastname + ChatColor.WHITE);
 			player.setCustomNameVisible(true);
 			player.sendMessage(
 					ChatColor.GREEN + "You joined as " + ChatColor.GOLD + character.firstname + " " + character.lastname);

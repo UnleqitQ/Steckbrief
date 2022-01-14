@@ -5,5 +5,7 @@ api-version: 1.18
 authors: [ Kevin, UnleqitQ ]
 
 commands:
-  steckbrief:
+  roleplay:
+    aliases:
+      - rp
 

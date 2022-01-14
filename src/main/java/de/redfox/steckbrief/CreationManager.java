@@ -29,8 +29,8 @@ public final class CreationManager implements Listener {
 		if (instances.containsKey(event.getPlayer())) {
 			CreationInstance instance = instances.get(event.getPlayer());
 			instance.input(event.getMessage());
+			event.setCancelled(true);
 		}
-		
 	}
 	
 }

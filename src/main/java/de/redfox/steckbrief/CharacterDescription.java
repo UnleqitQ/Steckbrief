@@ -2,8 +2,13 @@ package de.redfox.steckbrief;
 
 import com.google.gson.JsonObject;
 import de.redfox.steckbrief.manager.config.ConfigObject;
+import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class CharacterDescription {
@@ -23,7 +28,56 @@ public class CharacterDescription {
 	}
 	
 	public enum Sex {
-		MALE, FEMALE, DIVERSE, ATTACK_HELICOPTER
+		MALE("Male"), FEMALE("Female"), DIVERSE("Diverse"), ATTACK_HELICOPTER("Attack Helicopter");
+		
+		private final String display;
+		
+		private Sex(String display) {
+			this.display = display;
+		}
+		
+		public String getDisplay() {
+			return display;
+		}
+	}
+	
+	public String getName() {
+		return firstname + " " + lastname;
+	}
+	
+	public int[] getTimeSinceJoin() {
+		long current = System.currentTimeMillis();
+		long difference = current - firstJoin;
+		int totalSeconds = (int) (difference / 1000);
+		int totalMinutes = totalSeconds / 60;
+		int totalHours = totalMinutes / 60;
+		int days = totalHours / 24;
+		int seconds = totalSeconds % 60;
+		int minutes = totalMinutes % 60;
+		int hours = totalHours % 24;
+		return new int[]{seconds, minutes, hours, days, totalSeconds, totalMinutes, totalHours};
+	}
+	
+	public int[] getTimeDeathJoin() {
+		long current = deathTime;
+		long difference = current - firstJoin;
+		int totalSeconds = (int) (difference / 1000);
+		int totalMinutes = totalSeconds / 60;
+		int totalHours = totalMinutes / 60;
+		int days = totalHours / 24;
+		int seconds = totalSeconds % 60;
+		int minutes = totalMinutes % 60;
+		int hours = totalHours % 24;
+		return new int[]{seconds, minutes, hours, days, totalSeconds, totalMinutes, totalHours};
+	}
+	
+	public int getAge() {
+		int[] difference;
+		if (alive)
+			difference = getTimeSinceJoin();
+		else
+			difference = getTimeDeathJoin();
+		return joinAge + difference[3] / 28;
 	}
 	
 	public void save() {
@@ -57,6 +111,28 @@ public class CharacterDescription {
 		characterDescription.deathTime = config.get("deathTime").getAsLong();
 		characterDescription.alive = config.get("alive").getAsBoolean();
 		return characterDescription;
+	}
+	
+	public List<String> getDescription(boolean admin) {
+		List<String> l = new ArrayList<>();
+		if (admin) {
+			l.add("UUID: " + uuid.toString());
+			l.add("Player UUID: " + player.toString());
+			l.add("Player: " + Bukkit.getOfflinePlayer(player).getName());
+		}
+		l.add("Name: " + getName());
+		l.add("Sex: " + sexuality.getDisplay());
+		l.add("Age: " + getAge());
+		SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+		if (admin) {
+			l.add("Created: " + format.format(new Date(firstJoin)));
+		}
+		if (!alive) {
+			if (admin)
+				l.add("RT Death: " + format.format(new Date(deathTime)));
+			l.add("Death: " + format.format(new Date(deathTime)));
+		}
+		return l;
 	}
 	
 }
