@@ -6,12 +6,16 @@ import de.redfox.steckbrief.manager.config.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
 
 import java.util.Objects;
 
 public final class Steckbrief extends JavaPlugin {
 	
 	private static Steckbrief instance;
+	public static Scoreboard scoreboard;
+	public static Team team;
 	
 	public Steckbrief() {
 		instance = this;
@@ -36,6 +40,9 @@ public final class Steckbrief extends JavaPlugin {
 		
 		BlindnessManager.init();
 		
+		scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
+		team = scoreboard.registerNewTeam("NoName");
+		team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
 	}
 	
 	@Override

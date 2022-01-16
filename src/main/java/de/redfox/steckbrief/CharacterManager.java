@@ -82,6 +82,7 @@ public final class CharacterManager implements Listener, Runnable {
 	@EventHandler
 	public void onJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
+		Steckbrief.team.addEntry(player.getName());
 		if (hasAliveCharacter(player.getUniqueId())) {
 			CharacterDescription character = characters.get(players.get(player.getUniqueId()).characters.get(0));
 			player.setDisplayName(ChatColor.BLUE + character.getName() + ChatColor.WHITE);
