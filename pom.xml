@@ -80,8 +80,8 @@
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
         <repository>
-            <id>leoko-dev</id>
-            <url>https://repo.leoko.dev/releases</url>
+            <id>essentials</id>
+            <url></url>
         </repository>
     </repositories>
 
