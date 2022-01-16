@@ -81,7 +81,7 @@
         </repository>
         <repository>
             <id>essentials</id>
-            <url></url>
+            <url>https://repo.essentialsx.net/releases/</url>
         </repository>
     </repositories>
 
@@ -104,12 +104,17 @@
             <version>RELEASE</version>
             <scope>compile</scope>
         </dependency>
-
         <dependency>
-            <groupId>me.leoko.advancedgui</groupId>
-            <artifactId>AdvancedGUI</artifactId>
-            <version>2.1.0</version>
+            <groupId>net.essentialsx</groupId>
+            <artifactId>EssentialsX</artifactId>
+            <version>2.19.0</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.bstats</groupId>
+            <artifactId>bstats-bukkit</artifactId>
+            <version>2.2.1</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>
