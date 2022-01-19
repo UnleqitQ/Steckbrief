@@ -3,6 +3,7 @@ package de.redfox.steckbrief;
 import de.redfox.steckbrief.commands.RoleplayCommand;
 import de.redfox.steckbrief.manager.blindness.BlindnessManager;
 import de.redfox.steckbrief.manager.config.ConfigManager;
+import net.arcaniax.headdisplays.HeadDisplays;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -56,6 +57,10 @@ public final class Steckbrief extends JavaPlugin {
 	
 	public <T extends CommandExecutor> void registerCommand(String cmd, T handler) {
 		Objects.requireNonNull(getCommand(cmd)).setExecutor(handler);
+	}
+	
+	public static HeadDisplays getHeadDisplays() {
+		return (HeadDisplays) Bukkit.getPluginManager().getPlugin("HeadDisplays");
 	}
 	
 }
