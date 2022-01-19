@@ -38,7 +38,8 @@ public class FirstJoinSession {
                 .getField("", HandlerList.class);
 
         for (RegisteredListener registeredListener : field.getRegisteredListeners()) {
-            new ReflectionSession(registeredListener);
+            new ReflectionSession(registeredListener)
+                    .getMethodWithAnnotation(EventHandler.class);
 
         }
     }

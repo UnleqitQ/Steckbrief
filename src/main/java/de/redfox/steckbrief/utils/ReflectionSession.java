@@ -42,7 +42,11 @@ public class ReflectionSession {
         Method[] declaredMethods = instance.getClass().getDeclaredMethods();
         for (Method declaredMethod : declaredMethods) {
             A annotation = declaredMethod.getAnnotation(type);
-            return null;
+            if (annotation != null) {
+                return declaredMethod;
+            }
         }
+
+        return null;
     }
 }

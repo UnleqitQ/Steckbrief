@@ -1,17 +1,21 @@
 package de.redfox.steckbrief;
 
 import de.redfox.steckbrief.commands.RoleplayCommand;
-import de.redfox.steckbrief.events.EventPlayerJoin;
 import de.redfox.steckbrief.manager.blindness.BlindnessManager;
 import de.redfox.steckbrief.manager.config.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
 
 import java.util.Objects;
 
 public final class Steckbrief extends JavaPlugin {
+	
 	private static Steckbrief instance;
+	public static Scoreboard scoreboard;
+	public static Team team;
 	
 	public Steckbrief() {
 		instance = this;
@@ -33,9 +37,12 @@ public final class Steckbrief extends JavaPlugin {
 		CharacterManager manager = new CharacterManager();
 		Bukkit.getPluginManager().registerEvents(manager, this);
 		Bukkit.getScheduler().runTaskTimer(this, manager, 20, 40);
-
-		Bukkit.getPluginManager().registerEvents(new EventPlayerJoin(), this);
-
+		
+		BlindnessManager.init();
+		
+		scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
+		team = scoreboard.registerNewTeam("NoName");
+		team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
 	}
 	
 	@Override
