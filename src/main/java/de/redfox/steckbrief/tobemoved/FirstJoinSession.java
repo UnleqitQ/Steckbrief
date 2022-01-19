@@ -26,6 +26,8 @@ public class FirstJoinSession {
         activeListener = new LocalListener();
         Bukkit.getPluginManager().registerEvents(activeListener, Steckbrief.getInstance());
         start();
+
+        Steckbrief.getHeadDisplays().getf
     }
 
     public void start() {

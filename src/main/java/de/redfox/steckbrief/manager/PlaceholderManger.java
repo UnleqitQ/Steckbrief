@@ -1,5 +1,6 @@
 package de.redfox.steckbrief.manager;
 
+import de.redfox.steckbrief.Steckbrief;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -29,17 +30,17 @@ public class PlaceholderManger extends PlaceholderExpansion {
 	
 	@Override
 	public @NotNull String getIdentifier() {
-		return "steckbrief";
+		return Steckbrief.getInstance().getDescription().getName();
 	}
-	
+
 	@Override
 	public @NotNull String getAuthor() {
-		return "Kevin, UnleqitQ";
+		return Steckbrief.getInstance().getDescription().getAuthors().toString();
 	}
 	
 	@Override
 	public @NotNull String getVersion() {
-		return "1.0.0";
+		return Steckbrief.getInstance().getDescription().getVersion();
 	}
 	
 	@Override

@@ -35,6 +35,7 @@ public final class Steckbrief extends JavaPlugin {
 		
 		placeholderManger = new PlaceholderManger();
 		placeholderManger.register();
+		HeadDisplays.getDisplayManger().addDisplay();
 	}
 	
 	public <T extends CommandExecutor> void registerCommand(String cmd, T handler) {
