@@ -7,60 +7,40 @@ import net.arcaniax.headdisplays.HeadDisplays;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.Team;
 
 import java.util.Objects;
 
 public final class Steckbrief extends JavaPlugin {
-	
+
 	private static Steckbrief instance;
-	public static Scoreboard scoreboard;
-	public static Team team;
-	
+
 	public Steckbrief() {
 		instance = this;
 	}
 	
-	public static Steckbrief getInstance() {
-		return instance;
-	}
-	
 	@Override
 	public void onEnable() {
-		// Plugin startup logic
 		ConfigManager.init();
 		CharacterManager.loadCharacters();
 		CharacterManager.loadPlayers();
+		BlindnessManager.init();
+
 		registerCommand("roleplay", new RoleplayCommand());
+
 		//Bukkit.getPluginManager().registerEvents(new BlindnessListener(), this);
 		Bukkit.getPluginManager().registerEvents(new CreationManager(), this);
-		CharacterManager manager = new CharacterManager();
-		Bukkit.getPluginManager().registerEvents(manager, this);
-		Bukkit.getScheduler().runTaskTimer(this, manager, 20, 40);
-		
-		BlindnessManager.init();
-		
-		scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
-		team = scoreboard.registerNewTeam("NoName");
-		team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
+		Bukkit.getPluginManager().registerEvents(new CharacterManager(), this);
 	}
-	
-	@Override
-	public void onLoad() {
-	}
-	
-	@Override
-	public void onDisable() {
-		// Plugin shutdown logic
-	}
-	
+
 	public <T extends CommandExecutor> void registerCommand(String cmd, T handler) {
 		Objects.requireNonNull(getCommand(cmd)).setExecutor(handler);
 	}
-	
+
+	public static Steckbrief getInstance() {
+		return instance;
+	}
+
 	public static HeadDisplays getHeadDisplays() {
 		return (HeadDisplays) Bukkit.getPluginManager().getPlugin("HeadDisplays");
 	}
-	
 }
