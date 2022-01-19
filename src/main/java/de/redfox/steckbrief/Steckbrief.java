@@ -1,6 +1,7 @@
 package de.redfox.steckbrief;
 
 import de.redfox.steckbrief.commands.RoleplayCommand;
+import de.redfox.steckbrief.events.EventPlayerJoin;
 import de.redfox.steckbrief.manager.blindness.BlindnessManager;
 import de.redfox.steckbrief.manager.config.ConfigManager;
 import org.bukkit.Bukkit;
@@ -10,7 +11,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.Objects;
 
 public final class Steckbrief extends JavaPlugin {
-	
 	private static Steckbrief instance;
 	
 	public Steckbrief() {
@@ -33,9 +33,9 @@ public final class Steckbrief extends JavaPlugin {
 		CharacterManager manager = new CharacterManager();
 		Bukkit.getPluginManager().registerEvents(manager, this);
 		Bukkit.getScheduler().runTaskTimer(this, manager, 20, 40);
-		
-		BlindnessManager.init();
-		
+
+		Bukkit.getPluginManager().registerEvents(new EventPlayerJoin(), this);
+
 	}
 	
 	@Override

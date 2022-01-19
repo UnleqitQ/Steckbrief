@@ -11,8 +11,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 public class FirstJoinSession {
-    private static Location startLoc;
-    private static Location spawnLoc;
+    private static Location startLoc = new Location(Bukkit.getWorlds().get(0), 0, 65, 0, 0, 0);
+    private static Location spawnLoc = new Location(Bukkit.getWorlds().get(0), 10, 65, 0, 0, 0);
 
     private Player player;
 
@@ -22,6 +22,7 @@ public class FirstJoinSession {
         this.player = player;
         activeListener = new LocalListener();
         Bukkit.getPluginManager().registerEvents(activeListener, Steckbrief.getInstance());
+        start();
     }
 
     public void start() {
@@ -29,12 +30,7 @@ public class FirstJoinSession {
         player.setFlying(true);
         player.teleport(startLoc);
 
-        new MessageQueue(player)
-                .add(new TitleData("test", "tes", 1, 1, 1))
-                .add(new TitleData("test2", "tes2", 2, 2, 2))
-                .add(new TitleData("test3", "tes3", 1, 2, 1))
-                .add(new TitleData("test4", "tes4", 1, 1, 1))
-        .start();
+
     }
 
     public void stop() {
@@ -57,6 +53,9 @@ public class FirstJoinSession {
             double x = from.getX();
             double y = from.getY();
             double z = from.getZ();
+
+            from.setYaw(to.getYaw());
+            from.setPitch(to.getPitch());
 
             if (x != to.getX() || y != to.getY() || z != to.getZ()) {
                 event.setTo(from);
