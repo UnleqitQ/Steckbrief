@@ -1,6 +1,7 @@
 package de.redfox.steckbrief.tobemoved;
 
 import de.redfox.steckbrief.Steckbrief;
+import de.redfox.steckbrief.utils.ReflectionSession;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -9,6 +10,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.plugin.RegisteredListener;
+import org.bukkit.plugin.SimplePluginManager;
 
 public class FirstJoinSession {
     private static Location startLoc = new Location(Bukkit.getWorlds().get(0), 0, 65, 0, 0, 0);
@@ -30,7 +33,14 @@ public class FirstJoinSession {
         player.setFlying(true);
         player.teleport(startLoc);
 
+        SimplePluginManager pluginManager = (SimplePluginManager) Bukkit.getPluginManager();
+        HandlerList field = new ReflectionSession(pluginManager)
+                .getField("", HandlerList.class);
 
+        for (RegisteredListener registeredListener : field.getRegisteredListeners()) {
+            new ReflectionSession(registeredListener);
+
+        }
     }
 
     public void stop() {
