@@ -123,7 +123,7 @@ public class CreationInstance {
 		
 		private final Step nextStep;
 		
-		private Step(Step nextStep) {
+		Step(Step nextStep) {
 			this.nextStep = nextStep;
 		}
 		
