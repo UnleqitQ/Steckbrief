@@ -4,7 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -25,7 +25,8 @@ public final class CreationManager implements Listener {
 	}
 	
 	@EventHandler (priority = EventPriority.HIGHEST)
-	public void onChat(@NotNull AsyncPlayerChatEvent event) {
+	public void onChat(@NotNull PlayerChatEvent event) {
+
 		if (instances.containsKey(event.getPlayer())) {
 			event.setCancelled(true);
 			CreationInstance instance = instances.get(event.getPlayer());

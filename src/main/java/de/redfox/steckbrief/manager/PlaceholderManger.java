@@ -42,7 +42,9 @@ public class PlaceholderManger extends PlaceholderExpansion {
 	public @NotNull String getVersion() {
 		return Steckbrief.getInstance().getDescription().getVersion();
 	}
-	
+
+
+
 	@Override
 	public String onRequest(OfflinePlayer player, @NotNull String params) {
 		return getValue(player.getUniqueId(), Integer.parseInt(params.replaceAll("[\\D]+", "")));

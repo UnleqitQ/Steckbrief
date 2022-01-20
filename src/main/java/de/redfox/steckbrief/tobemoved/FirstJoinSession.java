@@ -1,7 +1,13 @@
 package de.redfox.steckbrief.tobemoved;
 
 import de.redfox.steckbrief.Steckbrief;
+import de.redfox.steckbrief.manager.PlaceholderManger;
 import de.redfox.steckbrief.utils.ReflectionSession;
+import net.arcaniax.headdisplays.HeadDisplays;
+import net.arcaniax.headdisplays.display.Display;
+import net.arcaniax.headdisplays.display.UpdateFrequency;
+import net.arcaniax.headdisplays.util.Cuboid;
+import net.arcaniax.headdisplays.util.Direction;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -15,13 +21,22 @@ import org.bukkit.plugin.SimplePluginManager;
 
 public class FirstJoinSession {
 	
-	public static Location startLoc = new Location(Bukkit.getWorlds().get(0), 0, 65, 0, 0, 0);
-	public static Location spawnLoc = new Location(Bukkit.getWorlds().get(0), 10, 65, 0, 0, 0);
+	public static Location startLoc = new Location(Bukkit.getWorld("world"), 0, 65, 0, 0, 0);
+	public static Location spawnLoc = new Location(Bukkit.getWorld("world"), 10, 65, 0, 0, 0);
 	
 	private Player player;
 	
 	private LocalListener activeListener;
-	
+
+	static {
+		Display display = new Display(HeadDisplays.getDisplayManger().getNextDisplayId(),
+				Cuboid.fromRadius(FirstJoinSession.startLoc.clone().add(2, 1, 0), 4), UpdateFrequency.SECONDS_1, true,
+				true, false, true, "%steckbrief_0%", 10, FirstJoinSession.startLoc.clone().add(2, 1, 0),
+				Direction.NORTH);
+
+		HeadDisplays.getDisplayManger().addDisplay(display);
+	}
+
 	public FirstJoinSession(Player player) {
 		this.player = player;
 		activeListener = new LocalListener();
@@ -33,6 +48,8 @@ public class FirstJoinSession {
 		player.setGameMode(GameMode.SPECTATOR);
 		player.setFlying(true);
 		player.teleport(startLoc);
+
+		PlaceholderManger.setValue(player.getUniqueId(), 0, "Test");
 		
 		SimplePluginManager pluginManager = (SimplePluginManager) Bukkit.getPluginManager();
 		HandlerList field = new ReflectionSession(pluginManager)

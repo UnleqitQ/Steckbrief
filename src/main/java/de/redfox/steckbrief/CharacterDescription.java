@@ -1,7 +1,6 @@
 package de.redfox.steckbrief;
 
 import com.google.gson.JsonObject;
-import de.redfox.steckbrief.manager.config.ConfigManager;
 import de.redfox.steckbrief.manager.config.ConfigObject;
 import de.redfox.steckbrief.utils.IdentityCardMap;
 import org.bukkit.*;
@@ -39,7 +38,7 @@ public class CharacterDescription {
 	
 	public MapView getMapView() {
 		if (mapView == null)
-			mapView = Bukkit.createMap(Bukkit.getWorlds().get(0));
+			mapView = Bukkit.createMap(Bukkit.getWorld("world"));
 		return mapView;
 	}
 	
