@@ -1,6 +1,7 @@
 package de.redfox.steckbrief;
 
 import de.redfox.steckbrief.manager.config.ConfigManager;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -111,7 +112,8 @@ public class CreationInstance {
 		CharacterManager.savePlayer(player.getUniqueId());
 		ConfigManager.characters.save();
 		ConfigManager.players.save();
-		description.updateMapView();
+		Bukkit.getScheduler().runTask(Steckbrief.getInstance(), description::updateMapView);
+		//description.updateMapView();
 		player.sendMessage(ChatColor.GREEN + "Your character was created");
 		player.sendMessage(ChatColor.GREEN + "Please rejoin");
 	}
