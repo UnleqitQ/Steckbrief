@@ -1,20 +1,21 @@
 package de.redfox.steckbrief;
 
 import de.redfox.steckbrief.commands.RoleplayCommand;
+import de.redfox.steckbrief.events.EventPlayerJoin;
+import de.redfox.steckbrief.events.EventPlayerQuit;
 import de.redfox.steckbrief.manager.PlaceholderManger;
 import de.redfox.steckbrief.manager.config.ConfigManager;
 import de.redfox.steckbrief.tobemoved.Other;
-import me.clip.placeholderapi.PlaceholderAPIPlugin;
 import net.arcaniax.headdisplays.HeadDisplays;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public final class Steckbrief extends JavaPlugin {
-	public static volatile Thread spigotThread;
-	
 	private static Steckbrief instance;
 	public PlaceholderManger placeholderManger;
 	
@@ -24,8 +25,6 @@ public final class Steckbrief extends JavaPlugin {
 	
 	@Override
 	public void onEnable() {
-		spigotThread = Thread.currentThread();
-
 		ConfigManager.init();
 		CharacterManager.loadCharacters();
 		CharacterManager.loadPlayers();
@@ -36,10 +35,14 @@ public final class Steckbrief extends JavaPlugin {
 		//Bukkit.getPluginManager().registerEvents(new BlindnessListener(), this);
 		Bukkit.getPluginManager().registerEvents(new CreationManager(), this);
 		Bukkit.getPluginManager().registerEvents(new CharacterManager(), this);
+		Bukkit.getPluginManager().registerEvents(new EventPlayerJoin(), this);
+		Bukkit.getPluginManager().registerEvents(new EventPlayerQuit(), this);
 
 
-		placeholderManger = new PlaceholderManger();
-		PlaceholderAPIPlugin.getInstance().getLocalExpansionManager().register(placeholderManger);
+		//placeholderManger = new PlaceholderManger();
+		//PlaceholderAPIPlugin.getInstance().getLocalExpansionManager().register(placeholderManger);
+
+		ArrayList
 
 	}
 	

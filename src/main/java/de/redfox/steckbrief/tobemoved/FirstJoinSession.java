@@ -1,8 +1,7 @@
 package de.redfox.steckbrief.tobemoved;
 
+import de.redfox.steckbrief.CreationManager;
 import de.redfox.steckbrief.Steckbrief;
-import de.redfox.steckbrief.manager.PlaceholderManger;
-import de.redfox.steckbrief.utils.ReflectionSession;
 import net.arcaniax.headdisplays.HeadDisplays;
 import net.arcaniax.headdisplays.display.Display;
 import net.arcaniax.headdisplays.display.UpdateFrequency;
@@ -16,10 +15,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.plugin.RegisteredListener;
-import org.bukkit.plugin.SimplePluginManager;
+
+import java.util.HashMap;
 
 public class FirstJoinSession {
+
+	public static HashMap<Player, FirstJoinSession> activeSessions = new HashMap<>();
 	
 	public static Location startLoc = new Location(Bukkit.getWorld("world"), 0, 65, 0, 0, 0);
 	public static Location spawnLoc = new Location(Bukkit.getWorld("world"), 10, 65, 0, 0, 0);
@@ -41,6 +42,7 @@ public class FirstJoinSession {
 		this.player = player;
 		activeListener = new LocalListener();
 		Bukkit.getPluginManager().registerEvents(activeListener, Steckbrief.getInstance());
+		activeSessions.put(player, this);
 		start();
 	}
 	
@@ -48,22 +50,12 @@ public class FirstJoinSession {
 		player.setGameMode(GameMode.SPECTATOR);
 		player.setFlying(true);
 		player.teleport(startLoc);
-
-		PlaceholderManger.setValue(player.getUniqueId(), 0, "Test");
-		
-		SimplePluginManager pluginManager = (SimplePluginManager) Bukkit.getPluginManager();
-		HandlerList field = new ReflectionSession(pluginManager)
-				.getField("", HandlerList.class);
-		
-		for (RegisteredListener registeredListener : field.getRegisteredListeners()) {
-			new ReflectionSession(registeredListener)
-					.getMethodWithAnnotation(EventHandler.class);
-			
-		}
+		CreationManager.startCreation(player);
 	}
 	
 	public void stop() {
 		HandlerList.unregisterAll(activeListener);
+		activeSessions.remove(player, this);
 		
 		player.setGameMode(GameMode.SURVIVAL);
 		player.setFlying(false);

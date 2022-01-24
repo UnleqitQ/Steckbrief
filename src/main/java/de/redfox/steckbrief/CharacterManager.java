@@ -23,7 +23,7 @@ import java.util.UUID;
 
 public final class CharacterManager implements Listener, Runnable {
 	
-	public Essentials essentials = (Essentials) Bukkit.getPluginManager().getPlugin("EssentialsX");
+	public Essentials essentials = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
 	public static Map<UUID, CharacterDescription> characters = new HashMap<>();
 	public static Map<String, UUID> characterNames = new HashMap<>();
 	public static Map<UUID, PlayerInformation> players = new HashMap<>();

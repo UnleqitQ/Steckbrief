@@ -4,10 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import de.redfox.steckbrief.utils.JSONParser;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.channels.Channels;
 import java.nio.channels.SeekableByteChannel;
 import java.nio.charset.StandardCharsets;
@@ -74,11 +71,10 @@ public class ConfigObject {
 	public void load() {
 		try {
 			SeekableByteChannel sbc = Files.newByteChannel(path);
-			InputStream in = Channels.newInputStream(sbc);
-			
+			Reader reader = Channels.newReader(sbc, StandardCharsets.UTF_8);
 			StringBuilder read = new StringBuilder((int) sbc.size());
 			int res;
-			while ((res = in.read()) != -1) {
+			while ((res = reader.read()) != -1) {
 				read.append((char) res);
 			}
 			rootSection = JSONParser.parse(read.toString());

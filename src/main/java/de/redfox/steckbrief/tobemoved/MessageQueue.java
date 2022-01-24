@@ -10,17 +10,20 @@ public class MessageQueue {
     private Player player;
     private Runnable localCallback;
 
-    public MessageQueue(Player player, Runnable callback) {
+    public MessageQueue(Player player) {
         this.player = player;
     }
 
-    private void sendNext() {
+    public void sendNext() {
         TitleData poll = queue.poll();
-        if (poll == null)
+        if (poll == null) {
+            player.sendTitle("", "");
             return;
+        }
 
         player.sendTitle(poll.title, poll.subtitle, poll.fadeOut, poll.duration, poll.fadeIn);
-        Bukkit.getScheduler().runTaskLater(Steckbrief.getInstance(), localCallback, poll.totalTime());
+        if (!poll.permanent)
+            Bukkit.getScheduler().runTaskLater(Steckbrief.getInstance(), localCallback, poll.totalTime());
     }
 
     public void start() {

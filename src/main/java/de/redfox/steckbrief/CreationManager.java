@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class CreationManager implements Listener {
-	
 	public static Map<Player, CreationInstance> instances = new HashMap<>();
 	
 	public static void startCreation(Player player) {
@@ -26,7 +25,6 @@ public final class CreationManager implements Listener {
 	
 	@EventHandler (priority = EventPriority.HIGHEST)
 	public void onChat(@NotNull AsyncPlayerChatEvent event) {
-		
 		if (instances.containsKey(event.getPlayer())) {
 			event.setCancelled(true);
 			CreationInstance instance = instances.get(event.getPlayer());

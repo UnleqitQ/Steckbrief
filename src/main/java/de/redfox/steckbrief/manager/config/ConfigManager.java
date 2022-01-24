@@ -1,10 +1,9 @@
 package de.redfox.steckbrief.manager.config;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
-import org.bukkit.entity.Player;
+import de.redfox.steckbrief.CreationInstance;
 
-import javax.swing.*;
+import java.util.Map;
 
 public class ConfigManager {
 	
@@ -14,6 +13,8 @@ public class ConfigManager {
 	public static ConfigObject players;
 	public static ConfigObject lang_de;
 	public static ConfigObject lang_en;
+
+	public static ConfigObject selectedLang;
 	
 	private static final String pluginPath = "plugins/Steckbrief";
 	
@@ -22,11 +23,21 @@ public class ConfigManager {
 		players = new ConfigObject(pluginPath, "players.json");
 		data = new ConfigObject(pluginPath, "data.json");
 
-		lang_de = new ConfigObject(pluginPath, "lang_de.json");
 		lang_en = new ConfigObject(pluginPath, "lang_en.json");
+		lang_de = new ConfigObject(pluginPath, "lang_de.json");
 
-		data.setDefault("test.test2.test3", new JsonPrimitive("testss"));
+		selectedLang = lang_de;
+	}
 
-		data.save();
+	public static ConfigObject registerCharacterCreationMessages() {
+		Map<String, Map<String, String>> messages = CreationInstance.getMessages();
+		Map<String, String> en = messages.get("en");
+		Map<String, String> de = messages.get("de");
+
+		en.forEach((k, v) -> lang_en.setDefault("CharacterCreation." + k, new JsonPrimitive(v)));
+		de.forEach((k, v) -> lang_de.setDefault("CharacterCreation." + k, new JsonPrimitive(v)));
+		lang_en.save();
+		lang_de.save();
+		return selectedLang;
 	}
 }
