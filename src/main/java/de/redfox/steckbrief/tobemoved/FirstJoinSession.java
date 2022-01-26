@@ -2,11 +2,6 @@ package de.redfox.steckbrief.tobemoved;
 
 import de.redfox.steckbrief.CreationManager;
 import de.redfox.steckbrief.Steckbrief;
-import net.arcaniax.headdisplays.HeadDisplays;
-import net.arcaniax.headdisplays.display.Display;
-import net.arcaniax.headdisplays.display.UpdateFrequency;
-import net.arcaniax.headdisplays.util.Cuboid;
-import net.arcaniax.headdisplays.util.Direction;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -23,20 +18,12 @@ public class FirstJoinSession {
 	public static HashMap<Player, FirstJoinSession> activeSessions = new HashMap<>();
 	
 	public static Location startLoc = new Location(Bukkit.getWorld("world"), 0, 65, 0, 0, 0);
-	public static Location spawnLoc = new Location(Bukkit.getWorld("world"), 10, 65, 0, 0, 0);
+	public static Location spawnLoc = new Location(Bukkit.getWorld("world"), 10, 0, 0, 0, 0);
 	
 	private Player player;
 	
 	private LocalListener activeListener;
 
-	static {
-		Display display = new Display(HeadDisplays.getDisplayManger().getNextDisplayId(),
-				Cuboid.fromRadius(FirstJoinSession.startLoc.clone().add(2, 1, 0), 4), UpdateFrequency.SECONDS_1, true,
-				true, false, true, "%steckbrief_0%", 10, FirstJoinSession.startLoc.clone().add(2, 1, 0),
-				Direction.NORTH);
-
-		HeadDisplays.getDisplayManger().addDisplay(display);
-	}
 
 	public FirstJoinSession(Player player) {
 		this.player = player;
@@ -50,16 +37,18 @@ public class FirstJoinSession {
 		player.setGameMode(GameMode.SPECTATOR);
 		player.setFlying(true);
 		player.teleport(startLoc);
-		CreationManager.startCreation(player);
+		CreationManager.startCreation(player, this::stop);
 	}
 	
 	public void stop() {
-		HandlerList.unregisterAll(activeListener);
-		activeSessions.remove(player, this);
-		
-		player.setGameMode(GameMode.SURVIVAL);
-		player.setFlying(false);
-		player.teleport(spawnLoc);
+		Bukkit.getScheduler().runTask(Steckbrief.getInstance(), () -> {
+			HandlerList.unregisterAll(activeListener);
+			activeSessions.remove(player, this);
+
+			player.setGameMode(GameMode.SURVIVAL);
+			player.setFlying(false);
+			player.teleport(spawnLoc);
+		});
 	}
 	
 	private class LocalListener implements Listener {

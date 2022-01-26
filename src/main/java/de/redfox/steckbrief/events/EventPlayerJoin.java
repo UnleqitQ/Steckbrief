@@ -14,10 +14,8 @@ public class EventPlayerJoin implements Listener {
     public void onEvent(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         player.sendTitle("", "");
-        System.out.println("test");
         JsonElement jsonElement = ConfigManager.players.rootSection.get(player.getUniqueId().toString());
         if (jsonElement == null) {
-            System.out.println("test");
             new FirstJoinSession(player);
         }
 

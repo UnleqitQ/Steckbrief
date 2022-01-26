@@ -24,7 +24,14 @@ public class CreationInstance {
 	private Step currentStep;
 
 	private final MessageQueue messageQueue;
-	
+
+	private Runnable callback;
+
+	public CreationInstance(Player player, Runnable callback) {
+		this(player);
+		this.callback = callback;
+	}
+
 	public CreationInstance(Player player) {
 		messageQueue = new MessageQueue(player);
 		messageQueue
@@ -111,6 +118,7 @@ public class CreationInstance {
 		Step next = currentStep.getNextStep();
 		if (next == null) {
 			CreationManager.instances.remove(player);
+			callback.run();
 			save();
 			return;
 		}

@@ -14,7 +14,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.Objects;
 
 public final class Steckbrief extends JavaPlugin {
-	
 	private static Steckbrief instance;
 	public PlaceholderManger placeholderManger;
 	
@@ -36,12 +35,10 @@ public final class Steckbrief extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new CharacterManager(), this);
 		Bukkit.getPluginManager().registerEvents(new EventPlayerJoin(), this);
 		Bukkit.getPluginManager().registerEvents(new EventPlayerQuit(), this);
-		
-		
+
+
 		//placeholderManger = new PlaceholderManger();
 		//PlaceholderAPIPlugin.getInstance().getLocalExpansionManager().register(placeholderManger);
-		
-		
 	}
 	
 	public <T extends CommandExecutor> void registerCommand(String cmd, T handler) {
