@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class CreationManager implements Listener {
+	
 	public static Map<Player, CreationInstance> instances = new HashMap<>();
 	
 	public static void startCreation(Player player) {
