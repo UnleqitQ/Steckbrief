@@ -1,6 +1,7 @@
 package de.redfox.steckbrief;
 
 import com.google.gson.JsonObject;
+import de.redfox.steckbrief.manager.config.ConfigManager;
 import de.redfox.steckbrief.manager.config.ConfigObject;
 import de.redfox.steckbrief.utils.IdentityCardMap;
 import org.bukkit.*;
@@ -49,7 +50,7 @@ public class CharacterDescription {
 	}
 	
 	public enum Sex {
-		MALE("Male"), FEMALE("Female"), DIVERSE("Diverse"), ATTACK_HELICOPTER("Attack Helicopter");
+		MÄNNLICH("Männlich"), WEIBLICH("Weiblich"), DIVERS("Divers");
 		
 		private final String display;
 		
@@ -196,8 +197,9 @@ public class CharacterDescription {
 		if (player != null) {
 			player.kickPlayer("You died\nPlease rejoin");
 		}
-		save();
 		deathTime = System.currentTimeMillis();
+		save();
+		ConfigManager.characters.save();
 	}
 	
 }

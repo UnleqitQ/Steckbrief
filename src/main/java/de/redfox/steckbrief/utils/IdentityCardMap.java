@@ -20,6 +20,8 @@ public class IdentityCardMap extends MapRenderer {
 	
 	CharacterDescription character;
 	BufferedImage head = null;
+	long lastHeadUpdate = 0;
+	BufferedImage image = null;
 	long lastUpdate = 0;
 	
 	public IdentityCardMap(CharacterDescription character) {
@@ -27,7 +29,7 @@ public class IdentityCardMap extends MapRenderer {
 	}
 	
 	private BufferedImage getHead() {
-		if (System.currentTimeMillis() - lastUpdate > 1000 * 60)
+		if (System.currentTimeMillis() - lastHeadUpdate > 1000 * 60)
 			try {
 				head = ImageIO.read(new URL("https://visage.surgeplay.com/head/" + character.player.toString()));
 			} catch (IOException e) {
@@ -69,16 +71,39 @@ public class IdentityCardMap extends MapRenderer {
 	
 	@Override
 	public void render(@NotNull MapView map, @NotNull MapCanvas canvas, @NotNull Player player) {
-		BufferedImage image = new BufferedImage(128, 128, BufferedImage.TYPE_4BYTE_ABGR);
-		Graphics2D g = image.createGraphics();
-		g.setFont(new Font("", Font.PLAIN, 10));
-		drawBackground(g);
-		drawHead(g);
-		drawLastName(g);
-		drawFirstName(g);
-		drawAge(g);
-		drawSex(g);
-		g.dispose();
+		if (lastUpdate - System.currentTimeMillis() > 1000 * 10 || image == null) {
+			image = new BufferedImage(128, 128, BufferedImage.TYPE_4BYTE_ABGR);
+			Graphics2D g = image.createGraphics();
+			g.setFont(new Font("", Font.PLAIN, 10));
+			drawBackground(g);
+			drawHead(g);
+			drawLastName(g);
+			drawFirstName(g);
+			drawAge(g);
+			drawSex(g);
+			/*if (!character.alive) {
+				Random rnd = new Random(character.getName().hashCode());
+				int x1 = rnd.nextInt(12) + 5;
+				for (int i = 0; i < 12; i++) {
+					int x2 = rnd.nextInt(12) + 5;
+					if (i % 8 == 0)
+						x2 = -x2;
+					int y1 = i * 8 + 16;
+					int y2 = y1 + 7;
+					/*g.setColor(Color.WHITE);
+					for (int j = 63; j < 66; j++) {
+						g.drawLine(x1 + j, y1, x2 + j, y2);
+					}/
+					g.setColor(Color.BLACK);
+					//g.drawLine(x1 + 66, y1, x2 + 66, y2);
+					//g.drawLine(x1 + 62, y1, x2 + 62, y2);
+					g.drawLine(x1 + 64, y1, x2 + 64, y2);
+					x1 = x2;
+				}
+			}*/
+			g.dispose();
+			lastUpdate = System.currentTimeMillis();
+		}
 		canvas.drawImage(0, 0, image);
 	}
 	

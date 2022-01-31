@@ -3,3 +3,9 @@ spawnLocation:
   x: 0
   y: 100
   z: 0
+
+startLocation:
+  world: world
+  x: 0
+  y: 200
+  z: 0
