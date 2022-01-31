@@ -9,6 +9,7 @@ public class AdminCommand extends Command {
 		super("admin");
 		setPermissionDefault(PermissionDefault.OP);
 		register(new SpawnLocationCommand());
+		register(new StartLocationCommand());
 	}
 	
 }

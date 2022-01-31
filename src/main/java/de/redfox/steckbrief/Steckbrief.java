@@ -7,7 +7,6 @@ import de.redfox.steckbrief.tobemoved.FirstJoinSession;
 import de.redfox.steckbrief.tobemoved.Other;
 import net.arcaniax.headdisplays.HeadDisplays;
 import org.bukkit.Bukkit;
-import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandExecutor;
@@ -93,11 +92,16 @@ public final class Steckbrief extends JavaPlugin {
 				FirstJoinSession.spawnLoc = new Location(world, x, y, z);
 			}
 		}
-	}
-	
-	public static Color randomColor() {
-		java.awt.Color c = java.awt.Color.getHSBColor((float) Math.random(), 1, 1);
-		return Color.fromBGR(c.getBlue(), c.getGreen(), c.getRed());
+		{
+			int x = Steckbrief.getInstance().getConfig().getInt("startLocation.x", 0);
+			int y = Steckbrief.getInstance().getConfig().getInt("startLocation.y", 100);
+			int z = Steckbrief.getInstance().getConfig().getInt("startLocation.z", 0);
+			String worldName = Steckbrief.getInstance().getConfig().getString("startLocation.world", "world");
+			World world = Bukkit.getWorld(worldName);
+			if (world != null) {
+				FirstJoinSession.startLoc = new Location(world, x, y, z);
+			}
+		}
 	}
 	
 }

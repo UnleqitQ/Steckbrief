@@ -5,6 +5,7 @@ import de.redfox.steckbrief.CharacterManager;
 import de.redfox.steckbrief.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.permissions.PermissionDefault;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ public class KillCharacterCommand extends Command {
 	
 	public KillCharacterCommand() {
 		super("kill");
+		setPermissionDefault(PermissionDefault.OP);
 	}
 	
 	@Override
