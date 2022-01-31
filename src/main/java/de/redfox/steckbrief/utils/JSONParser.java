@@ -3,7 +3,7 @@ package de.redfox.steckbrief.utils;
 import com.google.gson.*;
 
 public class JSONParser {
-    private static Gson g = new GsonBuilder().setPrettyPrinting().create();
+    private static final Gson g = new GsonBuilder().setPrettyPrinting().create();
 
     public static JsonObject parse(String json) {
         JsonElement jsonElement = g.fromJson(json, JsonElement.class);

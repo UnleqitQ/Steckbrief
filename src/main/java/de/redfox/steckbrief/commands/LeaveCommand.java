@@ -12,8 +12,7 @@ public class LeaveCommand extends Command {
 	
 	@Override
 	public void execute(CommandSender sender, String[] args) {
-		if (sender instanceof Player) {
-			Player player = (Player) sender;
+		if (sender instanceof Player player) {
 			player.setCustomNameVisible(false);
 			player.setCustomName(player.getName());
 			player.setPlayerListName(player.getName());

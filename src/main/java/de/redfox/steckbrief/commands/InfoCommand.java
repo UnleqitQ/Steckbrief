@@ -8,10 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class InfoCommand extends Command {
 	
@@ -76,8 +73,8 @@ public class InfoCommand extends Command {
 		List<String> l = new ArrayList<>();
 		if (args.length == 1) {
 			Arrays.stream(Bukkit.getOfflinePlayers()).filter(
-					player -> player.getName().toLowerCase().contains(args[0].toLowerCase())).forEach(
-					player -> l.add(player.getName()));
+					player -> Objects.requireNonNullElse(player.getName(), "\n").toLowerCase().contains(
+							args[0].toLowerCase())).forEach(player -> l.add(player.getName()));
 			CharacterManager.characters.forEach((uuid, character) -> {
 				if (character.firstname.toLowerCase().contains(args[0].toLowerCase()))
 					l.add(character.firstname + " " + character.lastname);

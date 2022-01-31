@@ -9,15 +9,16 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class EventPlayerJoin implements Listener {
-
-    @EventHandler
-    public void onEvent(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
-        player.sendTitle("", "");
-        JsonElement jsonElement = ConfigManager.players.rootSection.get(player.getUniqueId().toString());
-        if (jsonElement == null) {
-            new FirstJoinSession(player);
-        }
-
-    }
+	
+	@EventHandler
+	public void onEvent(PlayerJoinEvent event) {
+		Player player = event.getPlayer();
+		player.sendTitle("", "", 0, 0, 0);
+		JsonElement jsonElement = ConfigManager.players.rootSection.get(player.getUniqueId().toString());
+		if (jsonElement == null) {
+			new FirstJoinSession(player);
+		}
+		
+	}
+	
 }

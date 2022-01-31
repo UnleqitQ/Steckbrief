@@ -50,7 +50,7 @@ public class CreationInstance {
 	
 	public void input(String input) {
 		switch (currentStep) {
-			case FIRSTNAME: {
+			case FIRSTNAME -> {
 				input = input.replaceAll("\\W", "");
 				if (input.length() < 3) {
 					player.sendMessage(selectedLang.get("err_invalid_firstname").getAsString());
@@ -62,8 +62,7 @@ public class CreationInstance {
 				}
 				description.firstname = input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();
 			}
-			break;
-			case LASTNAME: {
+			case LASTNAME -> {
 				input = input.replaceAll("\\W", "");
 				if (input.length() < 3) {
 					player.sendMessage(selectedLang.get("err_invalid_lastname").getAsString());
@@ -80,8 +79,7 @@ public class CreationInstance {
 					currentStep = Step.START;
 				}
 			}
-			break;
-			case SEX: {
+			case SEX -> {
 				input = input.replaceAll("\\W", "");
 				try {
 					description.sexuality = CharacterDescription.Sex.valueOf(input.toUpperCase());
@@ -90,8 +88,7 @@ public class CreationInstance {
 					return;
 				}
 			}
-			break;
-			case AGE: {
+			case AGE -> {
 				try {
 					int val = Integer.parseInt(input);
 					if (val < 4 || val > 100) {
@@ -104,11 +101,9 @@ public class CreationInstance {
 					return;
 				}
 			}
-			break;
-			case CONFIRM: {
-
+			case CONFIRM -> {
+			
 			}
-			break;
 		}
 		nextStep();
 	}

@@ -16,10 +16,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public final class CharacterManager implements Listener, Runnable {
 	
@@ -79,11 +76,11 @@ public final class CharacterManager implements Listener, Runnable {
 		return players.containsKey(player) && players.get(player).characters.size() > 0 && characters.get(
 				players.get(player).characters.get(0)).alive;
 	}
-
+	
 	public CharacterManager() {
 		Bukkit.getScheduler().runTaskTimer(Steckbrief.getInstance(), this, 20, 40);
 	}
-
+	
 	@EventHandler
 	public void onJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
@@ -101,7 +98,7 @@ public final class CharacterManager implements Listener, Runnable {
 					ChatColor.GREEN + "You joined as " + ChatColor.GOLD + character.firstname + " " + character.lastname);
 		}
 		else {
-			
+			//Start creation
 		}
 	}
 	
@@ -109,11 +106,13 @@ public final class CharacterManager implements Listener, Runnable {
 		for (ItemStack item : inventory.all(Material.PAPER).values()) {
 			try {
 				UUID characterUuid = UUID.fromString(
-						item.getItemMeta().getPersistentDataContainer().get(CharacterDescription.cardKey,
-								PersistentDataType.STRING));
+						Objects.requireNonNull(
+								Objects.requireNonNull(item.getItemMeta()).getPersistentDataContainer().get(
+										CharacterDescription.cardKey,
+										PersistentDataType.STRING)));
 				CharacterDescription character = characters.get(characterUuid);
 				character.updateIdentityCard(item);
-			} catch (Exception e) {
+			} catch (NullPointerException ignored) {
 			}
 		}
 	}

@@ -52,7 +52,7 @@ public class CharacterDescription {
 		
 		private final String display;
 		
-		private Sex(String display) {
+		Sex(String display) {
 			this.display = display;
 		}
 		
@@ -116,6 +116,7 @@ public class CharacterDescription {
 		configObject.rootSection.add(uuid.toString(), config);
 	}
 	
+	@SuppressWarnings ("deprecation")
 	@NotNull
 	public static CharacterDescription load(@NotNull JsonObject config) {
 		CharacterDescription characterDescription = new CharacterDescription(

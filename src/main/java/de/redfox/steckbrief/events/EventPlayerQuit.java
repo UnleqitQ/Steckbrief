@@ -6,10 +6,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class EventPlayerQuit implements Listener {
-
-    @EventHandler
-    public void onEvent(PlayerQuitEvent event) {
-        Player player = event.getPlayer();
-        player.sendTitle("", "");
-    }
+	
+	@EventHandler
+	public void onEvent(PlayerQuitEvent event) {
+		Player player = event.getPlayer();
+		player.sendTitle("", "", 0, 0, 0);
+	}
+	
 }

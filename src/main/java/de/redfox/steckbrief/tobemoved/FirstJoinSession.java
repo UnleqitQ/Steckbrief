@@ -12,19 +12,20 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public class FirstJoinSession {
-
+	
 	public static HashMap<Player, FirstJoinSession> activeSessions = new HashMap<>();
 	
 	public static Location startLoc = new Location(Bukkit.getWorld("world"), 0, 65, 0, 0, 0);
 	public static Location spawnLoc = new Location(Bukkit.getWorld("world"), 10, 0, 0, 0, 0);
 	
-	private Player player;
+	private final Player player;
 	
-	private LocalListener activeListener;
-
-
+	private final LocalListener activeListener;
+	
+	
 	public FirstJoinSession(Player player) {
 		this.player = player;
 		activeListener = new LocalListener();
@@ -44,7 +45,7 @@ public class FirstJoinSession {
 		Bukkit.getScheduler().runTask(Steckbrief.getInstance(), () -> {
 			HandlerList.unregisterAll(activeListener);
 			activeSessions.remove(player, this);
-
+			
 			player.setGameMode(GameMode.SURVIVAL);
 			player.setFlying(false);
 			player.teleport(spawnLoc);
@@ -60,7 +61,7 @@ public class FirstJoinSession {
 				return;
 			
 			Location from = event.getFrom();
-			Location to = event.getTo();
+			Location to = Objects.requireNonNullElse(event.getTo(), event.getFrom().clone().add(1, 0, 0));
 			double x = from.getX();
 			double y = from.getY();
 			double z = from.getZ();
