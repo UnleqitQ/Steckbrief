@@ -191,14 +191,14 @@ public class CreationInstance {
 						Map.entry("age", "Wähle dein Alter"),
 						Map.entry("err_invalid_firstname", "Der Vorname ist ungültig (Mindestens 3 Zeichen)"),
 						Map.entry("err_invalid_lastname", "Der Nachname ist ungültig (Mindestens 3 Zeichen)"),
-						Map.entry("err_invalid_gender", "Das Geschlecht ist ungültig (Männlich, Weiblich, Divers)"),
+						Map.entry("err_invalid_gender", "Das Geschlecht ist ungültig (Männlich oder Weiblich)"),
 						Map.entry("err_invalid_age", "Das Alter ist ungültig (4 bis 100)"),
-						Map.entry("err_name_exists", "Der Name existiert bereits"),
-						Map.entry("err_restart", "Bitte wiederhole die Erstellung des Charakters"),
+						Map.entry("err_name_exists", "Der Name ist derzeit in Benutzung. Wähle bitte einen anderen."),
+						Map.entry("err_restart", "Es ist uns ein Fehler unterlaufen. Bitte wiederhole die Erstellung des Charakters."),
 						Map.entry("name_warning",
-								"Spieler mit beleidigenden oder illegalen Namen werden gebannt und die Informationen ggf. an die Strafverfolgungsbehörden weiter gegeben"),
-						Map.entry("character_rejoin", "Bitte rejoine, um den Prozess fertig zu stellen"),
-						Map.entry("character_created", "Dein Charakter wurde erstellt")));
+								"Spieler mit beleidigenden oder illegalen Namen werden gebannt und die Informationen ggf. an die Strafverfolgungsbehörden weiter gegeben."),
+						Map.entry("character_rejoin", "Du wurdest gekickt, damit dein Name für die Zukunft geladen ist. Du darfst den Server nun wieder betreten."),
+						Map.entry("character_created", "Dein Charakter wurde erfolgreich erstellt.")));
 	}
 	
 	public enum Step {
