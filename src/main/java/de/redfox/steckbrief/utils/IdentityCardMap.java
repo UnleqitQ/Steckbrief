@@ -1,6 +1,7 @@
 package de.redfox.steckbrief.utils;
 
 import de.redfox.steckbrief.CharacterDescription;
+import de.redfox.steckbrief.CharacterManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.map.MapCanvas;
@@ -55,19 +56,26 @@ public class IdentityCardMap extends MapRenderer {
 	
 	public void drawFirstName(Graphics2D g) {
 		g.setColor(java.awt.Color.BLACK);
-		g.drawString(character.firstname, 32, 52);
+		g.drawString(character.firstname, 32, 48);
 	}
 	
 	public void drawAge(Graphics2D g) {
 		g.setColor(java.awt.Color.BLACK);
-		g.drawString("Age: " + character.getAge(), 8, 76);
+		g.drawString("Age: " + character.getAge(), 8, 68);
 	}
 	
 	public void drawSex(Graphics2D g) {
 		g.setColor(java.awt.Color.BLACK);
-		g.drawString("Sex: " + character.sexuality.getDisplay(), 8, 100);
+		g.drawString("Sex: " + character.sexuality.getDisplay(), 8, 88);
 	}
 	
+	
+	private void drawMarried(Graphics2D g) {
+		if (character.married != null) {
+			g.setColor(java.awt.Color.BLACK);
+			g.drawString("Married: " + CharacterManager.characters.get(character.married).getName(), 8, 108);
+		}
+	}
 	
 	@Override
 	public void render(@NotNull MapView map, @NotNull MapCanvas canvas, @NotNull Player player) {
@@ -81,6 +89,7 @@ public class IdentityCardMap extends MapRenderer {
 			drawFirstName(g);
 			drawAge(g);
 			drawSex(g);
+			drawMarried(g);
 			/*if (!character.alive) {
 				Random rnd = new Random(character.getName().hashCode());
 				int x1 = rnd.nextInt(12) + 5;

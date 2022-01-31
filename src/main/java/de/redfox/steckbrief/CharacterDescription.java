@@ -25,6 +25,7 @@ public class CharacterDescription {
 	
 	public final UUID uuid;
 	public UUID player;
+	public UUID married = null;
 	public String firstname;
 	public String lastname;
 	public Sex sexuality;
@@ -115,6 +116,9 @@ public class CharacterDescription {
 		config.addProperty("alive", alive);
 		config.addProperty("deathTime", deathTime);
 		config.addProperty("map", getMapView().getId());
+		if (married != null) {
+			config.addProperty("married", married.toString());
+		}
 		configObject.rootSection.add(uuid.toString(), config);
 	}
 	
@@ -132,6 +136,9 @@ public class CharacterDescription {
 		characterDescription.deathTime = config.get("deathTime").getAsLong();
 		characterDescription.alive = config.get("alive").getAsBoolean();
 		characterDescription.mapView = Bukkit.getMap(config.get("map").getAsInt());
+		if (config.has("married")) {
+			characterDescription.married = UUID.fromString(config.get("married").getAsString());
+		}
 		return characterDescription;
 	}
 	
@@ -148,6 +155,9 @@ public class CharacterDescription {
 		SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 		if (admin) {
 			l.add("Created: " + format.format(new Date(firstJoin)));
+		}
+		if (married != null) {
+			l.add("Married: " + CharacterManager.characters.get(married).getName());
 		}
 		if (!alive) {
 			/*if (admin)

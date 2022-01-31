@@ -7,6 +7,7 @@ public class CharacterCommand extends Command {
 	public CharacterCommand() {
 		super("character");
 		register(new KillCharacterCommand());
+		register(new MarryCharacterCommand());
 	}
 	
 }
