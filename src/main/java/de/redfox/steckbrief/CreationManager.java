@@ -40,11 +40,13 @@ public final class CreationManager implements Listener {
 	
 	@EventHandler
 	public void onMove(@NotNull PlayerMoveEvent event) {
-		Location to = Objects.requireNonNullElse(event.getTo(), event.getFrom());
-		Location result = event.getFrom().clone();
-		result.setYaw(to.getYaw());
-		result.setPitch(to.getPitch());
-		event.setTo(result);
+		if (instances.containsKey(event.getPlayer())) {
+			Location to = Objects.requireNonNullElse(event.getTo(), event.getFrom());
+			Location result = event.getFrom().clone();
+			result.setYaw(to.getYaw());
+			result.setPitch(to.getPitch());
+			event.setTo(result);
+		}
 	}
 	
 }

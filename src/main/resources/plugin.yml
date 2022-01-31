@@ -3,10 +3,10 @@ version: '${project.version}'
 main: de.redfox.steckbrief.Steckbrief
 api-version: 1.18
 authors: [ Kevin, UnleqitQ ]
-depend:
-  - HeadDatabase
-  - HeadDisplays
-  - PlaceholderAPI
+depend: []
+  #- HeadDatabase
+  #- HeadDisplays
+  #- PlaceholderAPI
 
 commands:
   roleplay:

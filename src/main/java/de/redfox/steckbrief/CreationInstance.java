@@ -51,11 +51,9 @@ public class CreationInstance {
 	}
 	
 	public void finish() {
-		Bukkit.getScheduler().runTask(Steckbrief.getInstance(), () -> {
-			player.setGameMode(GameMode.SURVIVAL);
-			player.setFlying(false);
-			player.teleport(FirstJoinSession.spawnLoc);
-		});
+		player.setGameMode(GameMode.SURVIVAL);
+		player.setFlying(false);
+		player.teleport(FirstJoinSession.spawnLoc);
 	}
 	
 	public void input(String input) {
@@ -123,8 +121,10 @@ public class CreationInstance {
 		Step next = currentStep.getNextStep();
 		if (next == null) {
 			CreationManager.instances.remove(player);
-			finish();
-			save();
+			Bukkit.getScheduler().runTask(Steckbrief.getInstance(), () -> {
+				finish();
+				save();
+			});
 			return;
 		}
 		currentStep = next;
@@ -146,13 +146,21 @@ public class CreationInstance {
 		ConfigManager.characters.save();
 		ConfigManager.players.save();
 		
-		Bukkit.getScheduler().runTask(Steckbrief.getInstance(), description::updateMapView);
 		//description.updateMapView();
 		player.sendMessage(selectedLang.get("character_created").getAsString());
 		
 		FirstJoinSession firstJoinSession = FirstJoinSession.activeSessions.get(player);
 		if (firstJoinSession != null)
 			firstJoinSession.stop();
+		Bukkit.getScheduler().runTask(Steckbrief.getInstance(), description::updateMapView);
+		new Thread(() -> {
+			try {
+				Thread.sleep(400);
+			} catch (InterruptedException ignored) {
+			}
+			Bukkit.getScheduler().runTask(Steckbrief.getInstance(),
+					() -> player.kickPlayer(selectedLang.get("character_rejoin").getAsString()));
+		}).start();
 	}
 	
 	public static Map<String, Map<String, String>> getMessages() {
@@ -165,6 +173,7 @@ public class CreationInstance {
 						Map.entry("err_invalid_age", "Please enter a valid age (4-100)"),
 						Map.entry("err_name_exists", "This name already exists"),
 						Map.entry("err_restart", "Please redo the creation of your character"),
+						Map.entry("character_rejoin", "Please rejoin to finish the creation"),
 						Map.entry("character_created", "Your character was created")), "de",
 				Map.ofEntries(Map.entry("firstname", "Wähle deinen Vornamen"),
 						Map.entry("lastname", "Wähle deinen Nachnamen"), Map.entry("gender", "Wähle dein Geschlecht"),
@@ -175,6 +184,7 @@ public class CreationInstance {
 						Map.entry("err_invalid_age", "Das Alter ist ungültig (4 bis 100)"),
 						Map.entry("err_name_exists", "Der Name existiert bereits"),
 						Map.entry("err_restart", "Bitte wiederhole die Erstellung des Charakters"),
+						Map.entry("character_rejoin", "Please rejoin to finish the creation"),
 						Map.entry("character_created", "Dein Charakter wurde erstellt")));
 	}
 	

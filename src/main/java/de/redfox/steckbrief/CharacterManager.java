@@ -98,20 +98,19 @@ public final class CharacterManager implements Listener, Runnable {
 					ChatColor.GREEN + "You joined as " + ChatColor.GOLD + character.firstname + " " + character.lastname);
 		}
 		else {
-			//Start creation
 			player.sendTitle("", "", 0, 0, 0);
-			CreationManager.startCreation(player);
+			Bukkit.getScheduler().runTaskLater(Steckbrief.getInstance(), () -> {
+				CreationManager.startCreation(player);
+			}, 40);
 		}
 	}
 	
 	public void updateInventory(Inventory inventory) {
 		for (ItemStack item : inventory.all(Material.PAPER).values()) {
 			try {
-				UUID characterUuid = UUID.fromString(
-						Objects.requireNonNull(
-								Objects.requireNonNull(item.getItemMeta()).getPersistentDataContainer().get(
-										CharacterDescription.cardKey,
-										PersistentDataType.STRING)));
+				UUID characterUuid = UUID.fromString(Objects.requireNonNull(
+						Objects.requireNonNull(item.getItemMeta()).getPersistentDataContainer().get(
+								CharacterDescription.cardKey, PersistentDataType.STRING)));
 				CharacterDescription character = characters.get(characterUuid);
 				character.updateIdentityCard(item);
 			} catch (NullPointerException ignored) {

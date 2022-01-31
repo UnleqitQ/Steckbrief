@@ -29,7 +29,7 @@ public class FirstJoinSession {
 	public FirstJoinSession(Player player) {
 		this.player = player;
 		activeListener = new LocalListener();
-		Bukkit.getPluginManager().registerEvents(activeListener, Steckbrief.getInstance());
+		//Bukkit.getPluginManager().registerEvents(activeListener, Steckbrief.getInstance());
 		activeSessions.put(player, this);
 		start();
 	}
