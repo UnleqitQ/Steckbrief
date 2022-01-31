@@ -138,8 +138,8 @@ public class CharacterDescription {
 	public List<String> getDescription(boolean admin) {
 		List<String> l = new ArrayList<>();
 		if (admin) {
-			l.add("UUID: " + uuid.toString());
-			l.add("Player UUID: " + player.toString());
+			//l.add("UUID: " + uuid.toString());
+			//l.add("Player UUID: " + player.toString());
 			l.add("Player: " + Bukkit.getOfflinePlayer(player).getName());
 		}
 		l.add("Name: " + getName());
@@ -150,8 +150,8 @@ public class CharacterDescription {
 			l.add("Created: " + format.format(new Date(firstJoin)));
 		}
 		if (!alive) {
-			if (admin)
-				l.add("RT Death: " + format.format(new Date(deathTime)));
+			/*if (admin)
+				l.add("RT Death: " + format.format(new Date(deathTime)));*/
 			l.add("Death: " + format.format(new Date(deathTime)));
 		}
 		return l;
