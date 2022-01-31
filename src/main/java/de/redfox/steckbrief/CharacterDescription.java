@@ -50,7 +50,7 @@ public class CharacterDescription {
 	}
 	
 	public enum Sex {
-		MÄNNLICH("Männlich"), WEIBLICH("Weiblich"), DIVERS("Divers"), ZWITTER("Zwitter");
+		MAENNLICH("Männlich"), WEIBLICH("Weiblich"), DIVERS("Divers"), ZWITTER("Zwitter");
 		
 		private final String display;
 		
