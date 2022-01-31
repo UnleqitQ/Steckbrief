@@ -27,8 +27,7 @@ public class KillCharacterCommand extends Command {
 				if (CharacterManager.characterNames.containsKey(name)) {
 					CharacterDescription character = CharacterManager.characters.get(
 							CharacterManager.characterNames.get(name));
-					character.alive = false;
-					character.save();
+					character.onDeath();
 				}
 				else {
 					sender.sendMessage("Character does not exist");

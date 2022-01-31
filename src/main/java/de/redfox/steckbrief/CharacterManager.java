@@ -99,9 +99,7 @@ public final class CharacterManager implements Listener, Runnable {
 		}
 		else {
 			player.sendTitle("", "", 0, 0, 0);
-			Bukkit.getScheduler().runTaskLater(Steckbrief.getInstance(), () -> {
-				CreationManager.startCreation(player);
-			}, 40);
+			CreationManager.startCreation(player);
 		}
 	}
 	

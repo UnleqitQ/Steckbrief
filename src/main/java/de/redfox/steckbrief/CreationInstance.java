@@ -6,6 +6,7 @@ import de.redfox.steckbrief.tobemoved.FirstJoinSession;
 import de.redfox.steckbrief.tobemoved.MessageQueue;
 import de.redfox.steckbrief.tobemoved.TitleData;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
@@ -48,6 +49,8 @@ public class CreationInstance {
 		player.setGameMode(GameMode.SPECTATOR);
 		player.setFlying(true);
 		player.teleport(FirstJoinSession.startLoc);
+		player.sendMessage(
+				ChatColor.RED.toString() + ChatColor.BOLD + selectedLang.get("err_invalid_gender").getAsString());
 	}
 	
 	public void finish() {
@@ -172,7 +175,8 @@ public class CreationInstance {
 						Map.entry("err_invalid_gender", "Please enter a valid gender (Male, Female, Diverse)"),
 						Map.entry("err_invalid_age", "Please enter a valid age (4-100)"),
 						Map.entry("err_name_exists", "This name already exists"),
-						Map.entry("err_restart", "Please redo the creation of your character"),
+						Map.entry("err_restart", "Please redo the creation of your character"), Map.entry("name_warning",
+								"Players with offensive oder illegal names will be banned and the information will maybe be sent to the police"),
 						Map.entry("character_rejoin", "Please rejoin to finish the creation"),
 						Map.entry("character_created", "Your character was created")), "de",
 				Map.ofEntries(Map.entry("firstname", "Wähle deinen Vornamen"),
@@ -180,10 +184,13 @@ public class CreationInstance {
 						Map.entry("age", "Wähle dein Alter"),
 						Map.entry("err_invalid_firstname", "Der Vorname ist ungültig (Mindestens 3 Zeichen)"),
 						Map.entry("err_invalid_lastname", "Der Nachname ist ungültig (Mindestens 3 Zeichen)"),
-						Map.entry("err_invalid_gender", "Das Geschlecht ist ungültig (Männlich, Weiblich, Divers)"),
+						Map.entry("err_invalid_gender",
+								"Das Geschlecht ist ungültig (Männlich=Male, Weiblich=Female, Divers=Diverse)"),
 						Map.entry("err_invalid_age", "Das Alter ist ungültig (4 bis 100)"),
 						Map.entry("err_name_exists", "Der Name existiert bereits"),
 						Map.entry("err_restart", "Bitte wiederhole die Erstellung des Charakters"),
+						Map.entry("name_warning",
+								"Spieler mit beleidigenden oder illegalen Namen werden gebannt und die Informationen ggf. an die Strafverfolgungsbehörden weiter gegeben"),
 						Map.entry("character_rejoin", "Please rejoin to finish the creation"),
 						Map.entry("character_created", "Dein Charakter wurde erstellt")));
 	}

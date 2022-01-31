@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import de.redfox.steckbrief.manager.config.ConfigObject;
 import de.redfox.steckbrief.utils.IdentityCardMap;
 import org.bukkit.*;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.MapMeta;
@@ -64,19 +65,19 @@ public class CharacterDescription {
 	public String getName() {
 		return firstname + " " + lastname;
 	}
-
+	
 	/**
 	 * Assume a > b
 	 */
 	private int[] getTimeOfDifference(long difference) {
-		int totalSeconds = (int) (difference / 1000);
-		int totalMinutes = totalSeconds / 60;
-		int totalHours = totalMinutes / 60;
-		int days = totalHours / 24;
-		int seconds = totalSeconds % 60;
-		int minutes = totalMinutes % 60;
-		int hours = totalHours % 24;
-		return new int[]{seconds, minutes, hours, days, totalSeconds, totalMinutes, totalHours};
+		long totalSeconds = difference / 1000;
+		long totalMinutes = totalSeconds / 60;
+		long totalHours = totalMinutes / 60;
+		int days = (int) (totalHours / 24);
+		int seconds = (int) (totalSeconds % 60);
+		int minutes = (int) (totalMinutes % 60);
+		int hours = (int) (totalHours % 24);
+		return new int[]{seconds, minutes, hours, days, (int) (totalSeconds), (int) (totalMinutes), (int) (totalHours)};
 	}
 	
 	public int[] getTimeSinceJoin() {
@@ -93,7 +94,7 @@ public class CharacterDescription {
 			difference = getTimeSinceJoin();
 		else
 			difference = getTimeDeathJoin();
-		return joinAge + difference[3] / 28;
+		return joinAge + difference[3];
 	}
 	
 	public void save() {
@@ -102,7 +103,7 @@ public class CharacterDescription {
 	
 	public void save(@NotNull ConfigObject configObject) {
 		JsonObject config = new JsonObject();
-
+		
 		config.addProperty("uuid", uuid.toString());
 		config.addProperty("player", player.toString());
 		config.addProperty("firstname", firstname);
@@ -187,6 +188,16 @@ public class CharacterDescription {
 		meta.setDisplayName(ChatColor.DARK_PURPLE + "Identity Card");
 		map.setItemMeta(meta);
 		return map;
+	}
+	
+	public void onDeath() {
+		alive = false;
+		Player player = Bukkit.getPlayer(this.player);
+		if (player != null) {
+			player.kickPlayer("You died\nPlease rejoin");
+		}
+		save();
+		deathTime = System.currentTimeMillis();
 	}
 	
 }

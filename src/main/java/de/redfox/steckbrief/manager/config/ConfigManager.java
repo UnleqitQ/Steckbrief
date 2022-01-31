@@ -16,7 +16,7 @@ public class ConfigManager {
 
 	public static ConfigObject selectedLang;
 	
-	private static final String pluginPath = "plugins/Steckbrief";
+	public static final String pluginPath = "plugins/Steckbrief";
 	
 	public static void init() {
 		characters = new ConfigObject(pluginPath, "characters.json");
