@@ -1,17 +1,25 @@
 package de.redfox.steckbrief.command;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
+import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionDefault;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
 
 public abstract class Command implements TabExecutor {
 	
+	String permBase = "";
 	String name;
 	Map<String, Command> subCommands;
 	String savedPath;
+	@Nullable Command parent = null;
+	Permission permission;
+	PermissionDefault permissionDefault = PermissionDefault.TRUE;
 	
 	public Command(String name) {
 		this.name = name;
@@ -25,6 +33,25 @@ public abstract class Command implements TabExecutor {
 		subCommands = new HashMap<>();
 	}
 	
+	public void setPermBase(String permBase) {
+		this.permBase = permBase;
+	}
+	
+	public String getPermBase() {
+		return permBase;
+	}
+	
+	public void setPermissionDefault(PermissionDefault permissionDefault) {
+		this.permissionDefault = permissionDefault;
+	}
+	
+	public Permission getPermission() {
+		return permission;
+	}
+	
+	public PermissionDefault getPermissionDefault() {
+		return permissionDefault;
+	}
 	
 	public String getName() {
 		return name;
@@ -43,6 +70,10 @@ public abstract class Command implements TabExecutor {
 	}
 	
 	private void onCommand(CommandSender sender, String[] args) {
+		if (!sender.hasPermission(getPerm())) {
+			sender.sendMessage("You don't have the required permissions");
+			return;
+		}
 		if (subCommands.size() == 0) {
 			execute(sender, args);
 		}
@@ -91,8 +122,7 @@ public abstract class Command implements TabExecutor {
 	}
 	
 	@Override
-	public List<String> onTabComplete(CommandSender sender, org.bukkit.command.Command command, String label,
-		String[] args) {
+	public List<String> onTabComplete(CommandSender sender, org.bukkit.command.Command command, String label, String[] args) {
 		return onTabComplete(sender, args);
 	}
 	
@@ -105,6 +135,14 @@ public abstract class Command implements TabExecutor {
 	public void register(Command command) {
 		subCommands.put(command.name, command);
 		command.savedPath = savedPath + name + " ";
+		command.parent = this;
+	}
+	
+	public String getPerm() {
+		if (parent != null)
+			return parent.getPerm() + "." + name;
+		else
+			return permBase + ".command." + name;
 	}
 	
 	public List<String> help(String path, int tab) {
@@ -131,6 +169,15 @@ public abstract class Command implements TabExecutor {
 		for (String line : getHelp()) {
 			sender.sendMessage(line);
 		}
+	}
+	
+	public void finish() {
+		for (Command command : subCommands.values()) {
+			command.finish();
+		}
+		permission = new Permission(getPerm(), getPermissionDefault());
+		Bukkit.getPluginManager().removePermission(getPerm());
+		Bukkit.getPluginManager().addPermission(permission);
 	}
 	
 }

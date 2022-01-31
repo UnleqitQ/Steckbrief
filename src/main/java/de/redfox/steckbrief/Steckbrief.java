@@ -11,6 +11,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
+import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
@@ -34,7 +35,10 @@ public final class Steckbrief extends JavaPlugin {
 		saveDefaultConfig();
 		rlc();
 		
-		registerCommand("roleplay", new RoleplayCommand());
+		RoleplayCommand roleplayCommand = new RoleplayCommand();
+		registerCommand("roleplay", roleplayCommand);
+		roleplayCommand.setPermBase("roleplay");
+		roleplayCommand.finish();
 		
 		//Bukkit.getPluginManager().registerEvents(new BlindnessListener(), this);
 		Bukkit.getPluginManager().registerEvents(new CreationManager(), this);
@@ -49,6 +53,15 @@ public final class Steckbrief extends JavaPlugin {
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			player.kickPlayer("Plugin \"" + super.getName() + "\" loaded\nPlease rejoin");
 		}
+	}
+	
+	@Override
+	public void onDisable() {
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			player.sendTitle("", "", 0, 0, 0);
+		}
+		
+		HandlerList.unregisterAll(this);
 	}
 	
 	public <T extends CommandExecutor> void registerCommand(String cmd, T handler) {
