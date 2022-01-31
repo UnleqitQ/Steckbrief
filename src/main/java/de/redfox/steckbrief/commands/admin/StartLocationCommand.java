@@ -20,7 +20,7 @@ public class StartLocationCommand extends Command {
 			Steckbrief instance = Steckbrief.getInstance();
 			instance.rlc();
 			
-			FirstJoinSession.spawnLoc = new Location(player.getWorld(), player.getLocation().getBlockX(),
+			FirstJoinSession.startLoc = new Location(player.getWorld(), player.getLocation().getBlockX(),
 					player.getLocation().getBlockY(), player.getLocation().getBlockZ());
 			FileConfiguration config = instance.getConfig();
 			config.set("startLocation.x", player.getLocation().getBlockX());

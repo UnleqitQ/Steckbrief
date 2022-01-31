@@ -48,7 +48,7 @@ public class CreationInstance {
 	public void preInit() {
 		player.setGameMode(GameMode.SPECTATOR);
 		player.setFlying(true);
-		player.teleport(FirstJoinSession.startLoc);
+		player.teleport(FirstJoinSession.startLoc.clone().add(0.5, 0, 0.5));
 		player.sendMessage("");
 		player.sendMessage("");
 		player.sendMessage("");
@@ -59,7 +59,7 @@ public class CreationInstance {
 	public void finish() {
 		player.setGameMode(GameMode.SURVIVAL);
 		player.setFlying(false);
-		player.teleport(FirstJoinSession.spawnLoc);
+		player.teleport(FirstJoinSession.spawnLoc.clone().add(0.5, 0, 0.5));
 	}
 	
 	public void input(String input) {
@@ -126,7 +126,7 @@ public class CreationInstance {
 		messageQueue.sendNext();
 		Step next = currentStep.getNextStep();
 		if (next == null) {
-			CreationManager.instances.remove(player);
+			CreationManager.instances.remove(player.getUniqueId());
 			Bukkit.getScheduler().runTask(Steckbrief.getInstance(), () -> {
 				finish();
 				save();
