@@ -1,6 +1,8 @@
 package de.redfox.steckbrief;
 
 import de.redfox.steckbrief.commands.RoleplayCommand;
+import de.redfox.steckbrief.events.EventPlayerJoin;
+import de.redfox.steckbrief.events.EventPlayerQuit;
 import de.redfox.steckbrief.manager.PlaceholderManger;
 import de.redfox.steckbrief.manager.config.ConfigManager;
 import de.redfox.steckbrief.tobemoved.Other;
@@ -12,7 +14,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.Objects;
 
 public final class Steckbrief extends JavaPlugin {
-	
 	private static Steckbrief instance;
 	public PlaceholderManger placeholderManger;
 	
@@ -32,10 +33,10 @@ public final class Steckbrief extends JavaPlugin {
 		//Bukkit.getPluginManager().registerEvents(new BlindnessListener(), this);
 		Bukkit.getPluginManager().registerEvents(new CreationManager(), this);
 		Bukkit.getPluginManager().registerEvents(new CharacterManager(), this);
-		//Bukkit.getPluginManager().registerEvents(new EventPlayerJoin(), this);
-		//Bukkit.getPluginManager().registerEvents(new EventPlayerQuit(), this);
-		
-		
+		Bukkit.getPluginManager().registerEvents(new EventPlayerJoin(), this);
+		Bukkit.getPluginManager().registerEvents(new EventPlayerQuit(), this);
+
+
 		//placeholderManger = new PlaceholderManger();
 		//PlaceholderAPIPlugin.getInstance().getLocalExpansionManager().register(placeholderManger);
 	}

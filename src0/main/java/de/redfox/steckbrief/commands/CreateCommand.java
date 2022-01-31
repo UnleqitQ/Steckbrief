@@ -15,7 +15,7 @@ public class CreateCommand extends Command {
 	public void execute(CommandSender sender, String[] args) {
 		if (sender instanceof Player) {
 			Player player = (Player) sender;
-			CreationManager.startCreation(player);
+			CreationManager.startCreation(player, () -> {});
 		}
 		else {
 			sender.sendMessage("Has to be used by a player");

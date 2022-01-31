@@ -1,27 +1,26 @@
 package de.redfox.steckbrief;
 
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public final class CreationManager implements Listener {
 	
 	public static Map<Player, CreationInstance> instances = new HashMap<>();
-	
+
 	public static void startCreation(Player player) {
-		CreationInstance instance = new CreationInstance(player);
-		instances.put(player, instance);
-		instance.preInit();
+		instances.put(player, new CreationInstance(player));
+	}
+
+	public static void startCreation(Player player, Runnable callback) {
+		instances.put(player, new CreationInstance(player, callback	));
 	}
 	
 	@EventHandler
@@ -36,15 +35,6 @@ public final class CreationManager implements Listener {
 			CreationInstance instance = instances.get(event.getPlayer());
 			instance.input(event.getMessage());
 		}
-	}
-	
-	@EventHandler
-	public void onMove(@NotNull PlayerMoveEvent event) {
-		Location to = Objects.requireNonNullElse(event.getTo(), event.getFrom());
-		Location result = event.getFrom().clone();
-		result.setYaw(to.getYaw());
-		result.setPitch(to.getPitch());
-		event.setTo(result);
 	}
 	
 }

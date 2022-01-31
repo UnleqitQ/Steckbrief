@@ -38,7 +38,7 @@ public class FirstJoinSession {
 		player.setGameMode(GameMode.SPECTATOR);
 		player.setFlying(true);
 		player.teleport(startLoc);
-		CreationManager.startCreation(player/*, this::stop*/);
+		CreationManager.startCreation(player, this::stop);
 	}
 	
 	public void stop() {

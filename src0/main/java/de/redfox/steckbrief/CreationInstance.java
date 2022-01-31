@@ -6,56 +6,46 @@ import de.redfox.steckbrief.tobemoved.FirstJoinSession;
 import de.redfox.steckbrief.tobemoved.MessageQueue;
 import de.redfox.steckbrief.tobemoved.TitleData;
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
 import java.util.Map;
 import java.util.UUID;
 
 public class CreationInstance {
-	
 	private static final JsonObject selectedLang;
-	
+
 	static {
-		selectedLang = ConfigManager.registerCharacterCreationMessages().rootSection.get(
-				"CharacterCreation").getAsJsonObject();
+		selectedLang = ConfigManager.registerCharacterCreationMessages().rootSection.get("CharacterCreation").getAsJsonObject();
 	}
-	
+
 	public Player player;
 	public CharacterDescription description;
-	
+
 	private Step currentStep;
-	
+
 	private final MessageQueue messageQueue;
-	
-	
+
+	private Runnable callback;
+
+	public CreationInstance(Player player, Runnable callback) {
+		this(player);
+		this.callback = callback;
+	}
+
 	public CreationInstance(Player player) {
 		messageQueue = new MessageQueue(player);
-		messageQueue.add(new TitleData(selectedLang.get("firstname").getAsString(), "", 1000, 0)).add(
-				new TitleData(selectedLang.get("lastname").getAsString(), "", 1000, 0)).add(
-				new TitleData(selectedLang.get("gender").getAsString(), "", 1000, 0)).add(
-				new TitleData(selectedLang.get("age").getAsString(), "", 1000, 0));
-		
+		messageQueue
+				.add(new TitleData(selectedLang.get("firstname").getAsString(), "", 1000, 0))
+				.add(new TitleData(selectedLang.get("lastname").getAsString(), "", 1000, 0))
+				.add(new TitleData(selectedLang.get("gender").getAsString(), "", 1000, 0))
+				.add(new TitleData(selectedLang.get("age").getAsString(), "", 1000, 0));
+
 		this.player = player;
 		description = new CharacterDescription(UUID.randomUUID());
 		description.player = player.getUniqueId();
 		description.alive = true;
 		currentStep = Step.START;
 		nextStep();
-	}
-	
-	public void preInit() {
-		player.setGameMode(GameMode.SPECTATOR);
-		player.setFlying(true);
-		player.teleport(FirstJoinSession.startLoc);
-	}
-	
-	public void finish() {
-		Bukkit.getScheduler().runTask(Steckbrief.getInstance(), () -> {
-			player.setGameMode(GameMode.SURVIVAL);
-			player.setFlying(false);
-			player.teleport(FirstJoinSession.spawnLoc);
-		});
 	}
 	
 	public void input(String input) {
@@ -123,7 +113,7 @@ public class CreationInstance {
 		Step next = currentStep.getNextStep();
 		if (next == null) {
 			CreationManager.instances.remove(player);
-			finish();
+			callback.run();
 			save();
 			return;
 		}
@@ -145,19 +135,22 @@ public class CreationInstance {
 		CharacterManager.savePlayer(player.getUniqueId());
 		ConfigManager.characters.save();
 		ConfigManager.players.save();
-		
+
 		Bukkit.getScheduler().runTask(Steckbrief.getInstance(), description::updateMapView);
 		//description.updateMapView();
 		player.sendMessage(selectedLang.get("character_created").getAsString());
-		
+
 		FirstJoinSession firstJoinSession = FirstJoinSession.activeSessions.get(player);
 		if (firstJoinSession != null)
 			firstJoinSession.stop();
 	}
-	
+
 	public static Map<String, Map<String, String>> getMessages() {
-		return Map.of("en", Map.ofEntries(Map.entry("firstname", "Enter your firstname"),
-						Map.entry("lastname", "Enter your lastname"), Map.entry("gender", "Enter your gender"),
+		return Map.of(
+				"en", Map.ofEntries(
+						Map.entry("firstname", "Enter your firstname"),
+						Map.entry("lastname", "Enter your lastname"),
+						Map.entry("gender", "Enter your gender"),
 						Map.entry("age", "Enter your age"),
 						Map.entry("err_invalid_firstname", "Please enter a valid lirstname (At least 3 characters)"),
 						Map.entry("err_invalid_lastname", "Please enter a valid lastname (At least 3 characters)"),
@@ -165,9 +158,11 @@ public class CreationInstance {
 						Map.entry("err_invalid_age", "Please enter a valid age (4-100)"),
 						Map.entry("err_name_exists", "This name already exists"),
 						Map.entry("err_restart", "Please redo the creation of your character"),
-						Map.entry("character_created", "Your character was created")), "de",
-				Map.ofEntries(Map.entry("firstname", "Wähle deinen Vornamen"),
-						Map.entry("lastname", "Wähle deinen Nachnamen"), Map.entry("gender", "Wähle dein Geschlecht"),
+						Map.entry("character_created", "Your character was created")),
+				"de", Map.ofEntries(
+						Map.entry("firstname", "Wähle deinen Vornamen"),
+						Map.entry("lastname", "Wähle deinen Nachnamen"),
+						Map.entry("gender", "Wähle dein Geschlecht"),
 						Map.entry("age", "Wähle dein Alter"),
 						Map.entry("err_invalid_firstname", "Der Vorname ist ungültig (Mindestens 3 Zeichen)"),
 						Map.entry("err_invalid_lastname", "Der Nachname ist ungültig (Mindestens 3 Zeichen)"),
@@ -175,9 +170,10 @@ public class CreationInstance {
 						Map.entry("err_invalid_age", "Das Alter ist ungültig (4 bis 100)"),
 						Map.entry("err_name_exists", "Der Name existiert bereits"),
 						Map.entry("err_restart", "Bitte wiederhole die Erstellung des Charakters"),
-						Map.entry("character_created", "Dein Charakter wurde erstellt")));
+						Map.entry("character_created", "Dein Charakter wurde erstellt"))
+				);
 	}
-	
+
 	public enum Step {
 		CONFIRM(null), AGE(null), SEX(AGE), LASTNAME(SEX), FIRSTNAME(LASTNAME), START(FIRSTNAME);
 		

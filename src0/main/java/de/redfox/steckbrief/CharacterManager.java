@@ -99,8 +99,6 @@ public final class CharacterManager implements Listener, Runnable {
 		}
 		else {
 			//Start creation
-			player.sendTitle("", "", 0, 0, 0);
-			CreationManager.startCreation(player);
 		}
 	}
 	
