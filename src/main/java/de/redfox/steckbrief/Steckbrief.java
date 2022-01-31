@@ -7,6 +7,7 @@ import de.redfox.steckbrief.tobemoved.FirstJoinSession;
 import de.redfox.steckbrief.tobemoved.Other;
 import net.arcaniax.headdisplays.HeadDisplays;
 import org.bukkit.Bukkit;
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandExecutor;
@@ -50,9 +51,9 @@ public final class Steckbrief extends JavaPlugin {
 		//placeholderManger = new PlaceholderManger();
 		//PlaceholderAPIPlugin.getInstance().getLocalExpansionManager().register(placeholderManger);
 		
-		for (Player player : Bukkit.getOnlinePlayers()) {
+		/*for (Player player : Bukkit.getOnlinePlayers()) {
 			player.kickPlayer("Plugin \"" + super.getName() + "\" loaded\nPlease rejoin");
-		}
+		}*/
 	}
 	
 	@Override
@@ -92,6 +93,11 @@ public final class Steckbrief extends JavaPlugin {
 				FirstJoinSession.spawnLoc = new Location(world, x, y, z);
 			}
 		}
+	}
+	
+	public static Color randomColor() {
+		java.awt.Color c = java.awt.Color.getHSBColor((float) Math.random(), 1, 1);
+		return Color.fromBGR(c.getBlue(), c.getGreen(), c.getRed());
 	}
 	
 }

@@ -49,7 +49,6 @@ public class CreationInstance {
 		player.setGameMode(GameMode.SPECTATOR);
 		player.setFlying(true);
 		player.teleport(FirstJoinSession.startLoc);
-		player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD + selectedLang.get("name_warning").getAsString());
 		player.sendMessage("");
 		player.sendMessage("");
 		player.sendMessage("");
@@ -68,11 +67,11 @@ public class CreationInstance {
 			case FIRSTNAME -> {
 				input = input.replaceAll("\\W", "");
 				if (input.length() < 3) {
-					player.sendMessage(selectedLang.get("err_invalid_firstname").getAsString());
+					player.sendMessage(Steckbrief.randomColor()+selectedLang.get("err_invalid_firstname").getAsString());
 					return;
 				}
 				if (input.length() > 20) {
-					player.sendMessage(selectedLang.get("err_invalid_first").getAsString());
+					player.sendMessage(Steckbrief.randomColor()+selectedLang.get("err_invalid_first").getAsString());
 					return;
 				}
 				description.firstname = input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();
@@ -80,17 +79,17 @@ public class CreationInstance {
 			case LASTNAME -> {
 				input = input.replaceAll("\\W", "");
 				if (input.length() < 3) {
-					player.sendMessage(selectedLang.get("err_invalid_lastname").getAsString());
+					player.sendMessage(Steckbrief.randomColor()+selectedLang.get("err_invalid_lastname").getAsString());
 					return;
 				}
 				if (input.length() > 20) {
-					player.sendMessage(selectedLang.get("err_invalid_lastname").getAsString());
+					player.sendMessage(Steckbrief.randomColor()+selectedLang.get("err_invalid_lastname").getAsString());
 					return;
 				}
 				description.lastname = input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();
 				if (CharacterManager.characterNames.containsKey(description.getName())) {
-					player.sendMessage(selectedLang.get("err_name_exists").getAsString());
-					player.sendMessage(selectedLang.get("err_restart").getAsString());
+					player.sendMessage(Steckbrief.randomColor()+selectedLang.get("err_name_exists").getAsString());
+					player.sendMessage(Steckbrief.randomColor()+selectedLang.get("err_restart").getAsString());
 					currentStep = Step.START;
 				}
 			}
@@ -99,7 +98,7 @@ public class CreationInstance {
 				try {
 					description.sexuality = CharacterDescription.Sex.valueOf(input.toUpperCase());
 				} catch (IllegalArgumentException e) {
-					player.sendMessage(selectedLang.get("err_invalid_gender").getAsString());
+					player.sendMessage(Steckbrief.randomColor()+selectedLang.get("err_invalid_gender").getAsString());
 					return;
 				}
 			}
@@ -107,12 +106,12 @@ public class CreationInstance {
 				try {
 					int val = Integer.parseInt(input);
 					if (val < 4 || val > 100) {
-						player.sendMessage(selectedLang.get("err_invalid_age").getAsString());
+						player.sendMessage(Steckbrief.randomColor()+selectedLang.get("err_invalid_age").getAsString());
 						return;
 					}
 					description.joinAge = val;
 				} catch (NumberFormatException e) {
-					player.sendMessage(selectedLang.get("err_invalid_age").getAsString());
+					player.sendMessage(Steckbrief.randomColor()+selectedLang.get("err_invalid_age").getAsString());
 					return;
 				}
 			}
