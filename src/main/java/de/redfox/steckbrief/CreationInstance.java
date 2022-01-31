@@ -15,7 +15,7 @@ import java.util.UUID;
 
 public class CreationInstance {
 	
-	private static final JsonObject selectedLang;
+	public static final JsonObject selectedLang;
 	
 	static {
 		selectedLang = ConfigManager.registerCharacterCreationMessages().rootSection.get(
@@ -172,7 +172,8 @@ public class CreationInstance {
 	
 	public static Map<String, Map<String, String>> getMessages() {
 		return Map.of("en", Map.ofEntries(Map.entry("firstname", "Enter your firstname"),
-						Map.entry("lastname", "Enter your lastname"), Map.entry("gender", "Enter your gender"),
+						Map.entry("lastname", "Enter your lastname"),
+						Map.entry("gender", "Enter your gender"),
 						Map.entry("age", "Enter your age"),
 						Map.entry("err_invalid_firstname", "Please enter a valid lirstname (At least 3 characters)"),
 						Map.entry("err_invalid_lastname", "Please enter a valid lastname (At least 3 characters)"),
@@ -184,8 +185,9 @@ public class CreationInstance {
 						Map.entry("name_warning",
 								"Players with offensive oder illegal names will be banned and the information will maybe be sent to the police"),
 						Map.entry("character_rejoin", "Please rejoin to finish the creation"),
-						Map.entry("character_created", "Your character was created")),
-				"de", Map.ofEntries(Map.entry("firstname", "Wähle deinen Vornamen"),
+						Map.entry("character_death_rejoin", "Your character died!\nPlease rejoin"),
+						Map.entry("character_created", "Your character was created")), "de",
+				Map.ofEntries(Map.entry("firstname", "Wähle deinen Vornamen"),
 						Map.entry("lastname", "Wähle deinen Nachnamen"),
 						Map.entry("gender", "Wähle dein Geschlecht"),
 						Map.entry("age", "Wähle dein Alter"),
@@ -194,10 +196,14 @@ public class CreationInstance {
 						Map.entry("err_invalid_gender", "Das Geschlecht ist ungültig (Männlich oder Weiblich)"),
 						Map.entry("err_invalid_age", "Das Alter ist ungültig (4 bis 100)"),
 						Map.entry("err_name_exists", "Der Name ist derzeit in Benutzung. Wähle bitte einen anderen."),
-						Map.entry("err_restart", "Es ist uns ein Fehler unterlaufen. Bitte wiederhole die Erstellung des Charakters."),
+						Map.entry("err_restart",
+								"Es ist uns ein Fehler unterlaufen. Bitte wiederhole die Erstellung des Charakters."),
 						Map.entry("name_warning",
 								"Spieler mit beleidigenden oder illegalen Namen werden gebannt und die Informationen ggf. an die Strafverfolgungsbehörden weiter gegeben."),
-						Map.entry("character_rejoin", "Du wurdest gekickt, damit dein Name für die Zukunft geladen ist. Du darfst den Server nun wieder betreten."),
+						Map.entry("character_rejoin",
+								"Du wurdest gekickt, damit dein Name für die Zukunft geladen ist. Du darfst den Server nun wieder betreten."),
+						Map.entry("character_death_rejoin",
+								"Du bist gestorben!\nBitte rejoine, um einen neuen Charakter zu erstellen."),
 						Map.entry("character_created", "Dein Charakter wurde erfolgreich erstellt.")));
 	}
 	

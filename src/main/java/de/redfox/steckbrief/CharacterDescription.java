@@ -195,7 +195,7 @@ public class CharacterDescription {
 		alive = false;
 		Player player = Bukkit.getPlayer(this.player);
 		if (player != null) {
-			player.kickPlayer("You died\nPlease rejoin");
+			player.kickPlayer(CreationInstance.selectedLang.get("character_death_rejoin").getAsString());
 		}
 		deathTime = System.currentTimeMillis();
 		save();
