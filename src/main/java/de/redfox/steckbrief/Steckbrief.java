@@ -4,6 +4,7 @@ import de.redfox.steckbrief.commands.RoleplayCommand;
 import de.redfox.steckbrief.manager.PlaceholderManger;
 import de.redfox.steckbrief.manager.config.ConfigManager;
 import de.redfox.steckbrief.tobemoved.FirstJoinSession;
+import me.clip.placeholderapi.PlaceholderAPIPlugin;
 import net.arcaniax.headdisplays.HeadDisplays;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -44,9 +45,8 @@ public final class Steckbrief extends JavaPlugin {
 		//Bukkit.getPluginManager().registerEvents(new EventPlayerJoin(), this);
 		//Bukkit.getPluginManager().registerEvents(new EventPlayerQuit(), this);
 		
-		
-		//placeholderManger = new PlaceholderManger();
-		//PlaceholderAPIPlugin.getInstance().getLocalExpansionManager().register(placeholderManger);
+		placeholderManger = new PlaceholderManger();
+		PlaceholderAPIPlugin.getInstance().getLocalExpansionManager().register(placeholderManger);
 		
 		/*for (Player player : Bukkit.getOnlinePlayers()) {
 			player.kickPlayer("Plugin \"" + super.getName() + "\" loaded\nPlease rejoin");
@@ -60,6 +60,7 @@ public final class Steckbrief extends JavaPlugin {
 		}
 		
 		HandlerList.unregisterAll(this);
+		PlaceholderAPIPlugin.getInstance().getLocalExpansionManager().unregister(placeholderManger);
 	}
 	
 	public <T extends CommandExecutor> void registerCommand(String cmd, T handler) {
