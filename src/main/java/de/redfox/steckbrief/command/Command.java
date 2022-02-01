@@ -65,6 +65,10 @@ public abstract class Command implements TabExecutor {
 		sendHelp(sender);
 	}
 	
+	public Command getParent() {
+		return parent;
+	}
+	
 	public List<String> tab(CommandSender sender, String[] args) {
 		return new ArrayList<>();
 	}

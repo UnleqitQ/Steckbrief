@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import de.redfox.steckbrief.manager.config.ConfigObject;
+import org.bukkit.Bukkit;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -51,6 +52,7 @@ public class PlayerInformation {
 			for (UUID uuid : Lists.reverse(characters)) {
 				if (CharacterManager.characters.get(uuid).alive) {
 					activeCharacter = uuid;
+					Bukkit.getLogger().info(uuid.toString());
 					return uuid;
 				}
 			}

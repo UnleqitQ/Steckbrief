@@ -30,7 +30,7 @@ public class InfoCharacterCommand extends Command {
 				sender.sendMessage("-".repeat(20));
 				sender.sendMessage("");
 				sender.sendMessage(character.getName() + ":");
-				for (String line : character.getDescription(true)) {
+				for (String line : character.getDescription(sender.hasPermission(getParent().getPerm()+".admin"))) {
 					sender.sendMessage(" ".repeat(4) + line);
 				}
 				sender.sendMessage("");

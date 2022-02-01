@@ -4,6 +4,7 @@ import de.redfox.steckbrief.CharacterDescription;
 import de.redfox.steckbrief.CharacterManager;
 import de.redfox.steckbrief.PlayerInformation;
 import de.redfox.steckbrief.command.Command;
+import de.redfox.steckbrief.commands.admin.AdminCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -29,7 +30,7 @@ public class InfoPlayerCommand extends Command {
 				for (UUID characterUuid : information.characters) {
 					CharacterDescription character = CharacterManager.characters.get(characterUuid);
 					sender.sendMessage(character.getName() + ":");
-					for (String line : character.getDescription(true)) {
+					for (String line : character.getDescription(sender.hasPermission(getParent().getPerm()+".admin"))) {
 						sender.sendMessage(" ".repeat(4) + line);
 					}
 					sender.sendMessage("");

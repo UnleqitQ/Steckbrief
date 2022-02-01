@@ -1,6 +1,9 @@
 package de.redfox.steckbrief.commands;
 
 import de.redfox.steckbrief.command.Command;
+import org.bukkit.Bukkit;
+import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionDefault;
 
 public class InfoCommand extends Command {
 	
@@ -8,6 +11,15 @@ public class InfoCommand extends Command {
 		super("info");
 		register(new InfoCharacterCommand());
 		register(new InfoPlayerCommand());
+	}
+	
+	@Override
+	public void finish() {
+		super.finish();
+		
+		Permission permission = new Permission(getPerm() + ".admin", PermissionDefault.OP);
+		Bukkit.getPluginManager().removePermission(permission.getName());
+		Bukkit.getPluginManager().addPermission(permission);
 	}
 	
 	/*@Override

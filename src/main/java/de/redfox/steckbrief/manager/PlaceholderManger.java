@@ -31,7 +31,7 @@ public class PlaceholderManger extends PlaceholderExpansion {
 	
 	@Override
 	public @NotNull String getIdentifier() {
-		return Steckbrief.getInstance().getDescription().getName();
+		return "rp";
 	}
 	
 	@Override
