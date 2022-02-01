@@ -20,6 +20,8 @@ public abstract class Command implements TabExecutor {
 	@Nullable Command parent = null;
 	Permission permission;
 	PermissionDefault permissionDefault = PermissionDefault.TRUE;
+	Permission subParentPermission;
+	PermissionDefault subParentPermissionDefault = PermissionDefault.TRUE;
 	
 	public Command(String name) {
 		this.name = name;
@@ -51,6 +53,18 @@ public abstract class Command implements TabExecutor {
 	
 	public PermissionDefault getPermissionDefault() {
 		return permissionDefault;
+	}
+	
+	public void setSubParentPermissionDefault(PermissionDefault permissionDefault) {
+		this.subParentPermissionDefault = subParentPermissionDefault;
+	}
+	
+	public Permission getSubParentPermission() {
+		return subParentPermission;
+	}
+	
+	public PermissionDefault getSubParentPermissionDefault() {
+		return subParentPermissionDefault;
 	}
 	
 	public String getName() {
@@ -176,12 +190,20 @@ public abstract class Command implements TabExecutor {
 	}
 	
 	public void finish() {
-		for (Command command : subCommands.values()) {
-			command.finish();
-		}
 		permission = new Permission(getPerm(), getPermissionDefault());
 		Bukkit.getPluginManager().removePermission(getPerm());
 		Bukkit.getPluginManager().addPermission(permission);
+		
+		subParentPermission = new Permission(getPerm() + ".*", getSubParentPermissionDefault());
+		Bukkit.getPluginManager().removePermission(getSubParentPermission().getName());
+		Bukkit.getPluginManager().addPermission(subParentPermission);
+		
+		if (parent != null)
+			permission.addParent(parent.getSubParentPermission(), true);
+		
+		for (Command command : subCommands.values()) {
+			command.finish();
+		}
 	}
 	
 }
