@@ -5,14 +5,16 @@ import de.redfox.steckbrief.CharacterManager;
 import de.redfox.steckbrief.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.permissions.PermissionDefault;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class IdMapCommand extends Command {
+public class KillCharacterCommand extends Command {
 	
-	public IdMapCommand() {
-		super("idmap");
+	public KillCharacterCommand() {
+		super("kill");
+		setPermissionDefault(PermissionDefault.OP);
 	}
 	
 	@Override
@@ -27,14 +29,14 @@ public class IdMapCommand extends Command {
 				if (CharacterManager.characterNames.containsKey(name)) {
 					CharacterDescription character = CharacterManager.characters.get(
 							CharacterManager.characterNames.get(name));
-					((Player) sender).getInventory().addItem(character.getIdentityMap());
+					character.onDeath();
 				}
 				else {
 					sender.sendMessage("Character does not exist");
 				}
 			}
 			else {
-				sender.sendMessage("Please use /roleplay card <firstname> <lastname>");
+				sender.sendMessage("Please use /roleplay edit character kill <firstname> <lastname>");
 			}
 		}
 		else {

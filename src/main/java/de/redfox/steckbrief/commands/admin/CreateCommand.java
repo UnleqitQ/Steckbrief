@@ -1,4 +1,4 @@
-package de.redfox.steckbrief.commands;
+package de.redfox.steckbrief.commands.admin;
 
 import de.redfox.steckbrief.CreationManager;
 import de.redfox.steckbrief.command.Command;

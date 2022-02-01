@@ -10,6 +10,10 @@ public class AdminCommand extends Command {
 		setPermissionDefault(PermissionDefault.OP);
 		register(new SpawnLocationCommand());
 		register(new StartLocationCommand());
+		register(new IdCardCommand());
+		register(new IdMapCommand());
+		register(new ReloadCommand());
+		register(new CreateCommand());
 	}
 	
 }

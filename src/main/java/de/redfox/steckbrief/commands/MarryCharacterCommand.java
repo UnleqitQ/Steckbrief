@@ -1,4 +1,4 @@
-package de.redfox.steckbrief.commands.edit.character;
+package de.redfox.steckbrief.commands;
 
 import de.redfox.steckbrief.CharacterDescription;
 import de.redfox.steckbrief.CharacterManager;
