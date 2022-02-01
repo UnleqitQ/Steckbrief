@@ -57,7 +57,7 @@ public class MarryCharacterCommand extends Command {
 		}
 		else {
 			sender.sendMessage(
-					"Please use /roleplay edit character marry <firstname1> <lastname1> <firstname2> <lastname2>");
+					"Please use /roleplay marry <firstname1> <lastname1> <firstname2> <lastname2>");
 		}
 	}
 	

@@ -36,7 +36,7 @@ public class KillCharacterCommand extends Command {
 				}
 			}
 			else {
-				sender.sendMessage("Please use /roleplay edit character kill <firstname> <lastname>");
+				sender.sendMessage("Please use /roleplay kill <firstname> <lastname>");
 			}
 		}
 		else {

@@ -34,7 +34,7 @@ public class IdCardCommand extends Command {
 				}
 			}
 			else {
-				sender.sendMessage("Please use /roleplay card <firstname> <lastname>");
+				sender.sendMessage("Please use /roleplay admin idcard <firstname> <lastname>");
 			}
 		}
 		else {

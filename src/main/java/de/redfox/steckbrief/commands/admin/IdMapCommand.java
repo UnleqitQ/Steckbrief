@@ -34,7 +34,7 @@ public class IdMapCommand extends Command {
 				}
 			}
 			else {
-				sender.sendMessage("Please use /roleplay card <firstname> <lastname>");
+				sender.sendMessage("Please use /roleplay admin idmap <firstname> <lastname>");
 			}
 		}
 		else {
