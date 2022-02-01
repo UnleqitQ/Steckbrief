@@ -1,40 +1,24 @@
 package de.redfox.steckbrief.commands;
 
+import de.redfox.steckbrief.CharacterDescription;
+import de.redfox.steckbrief.CharacterManager;
+import de.redfox.steckbrief.PlayerInformation;
 import de.redfox.steckbrief.command.Command;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.command.CommandSender;
 
-public class InfoCommand extends Command {
+import java.util.*;
+
+public class InfoCharacterCommand extends Command {
 	
-	public InfoCommand() {
-		super("info");
-		register(new InfoCharacterCommand());
-		register(new InfoPlayerCommand());
+	public InfoCharacterCommand() {
+		super("character");
 	}
 	
-	/*@Override
+	@Override
 	public void execute(CommandSender sender, String[] args) {
-		if (args.length == 1) {
-			String name = args[0];
-			OfflinePlayer player = Arrays.stream(Bukkit.getOfflinePlayers()).filter(
-					player0 -> player0.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
-			if (player != null) {
-				PlayerInformation information = CharacterManager.getPlayer(player.getUniqueId());
-				sender.sendMessage("-".repeat(20));
-				sender.sendMessage("");
-				for (UUID characterUuid : information.characters) {
-					CharacterDescription character = CharacterManager.characters.get(characterUuid);
-					sender.sendMessage(character.getName() + ":");
-					for (String line : character.getDescription(true)) {
-						sender.sendMessage(" ".repeat(4) + line);
-					}
-					sender.sendMessage("");
-				}
-				sender.sendMessage("-".repeat(20));
-			}
-			else {
-				sender.sendMessage("Player does not exist");
-			}
-		}
-		else if (args.length == 2) {
+		if (args.length == 2) {
 			String firstname = args[0];
 			String lastname = args[1];
 			String name = firstname.substring(0, 1).toUpperCase() + firstname.substring(
@@ -57,8 +41,7 @@ public class InfoCommand extends Command {
 			}
 		}
 		else {
-			sender.sendMessage("Please use /roleplay info <player> or");
-			sender.sendMessage("Please use /roleplay info <firstname> <lastname>");
+			sender.sendMessage("Please use /roleplay info character <firstname> <lastname>");
 		}
 	}
 	
@@ -66,9 +49,6 @@ public class InfoCommand extends Command {
 	public List<String> tab(CommandSender sender, String[] args) {
 		List<String> l = new ArrayList<>();
 		if (args.length == 1) {
-			Arrays.stream(Bukkit.getOfflinePlayers()).filter(
-					player -> Objects.requireNonNullElse(player.getName(), "\n").toLowerCase().contains(
-							args[0].toLowerCase())).forEach(player -> l.add(player.getName()));
 			CharacterManager.characters.forEach((uuid, character) -> {
 				if (character.firstname.toLowerCase().contains(args[0].toLowerCase()))
 					l.add(character.firstname + " " + character.lastname);
@@ -82,6 +62,6 @@ public class InfoCommand extends Command {
 			});
 		}
 		return l;
-	}*/
+	}
 	
 }
