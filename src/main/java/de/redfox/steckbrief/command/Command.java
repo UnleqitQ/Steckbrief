@@ -45,6 +45,7 @@ public abstract class Command implements TabExecutor {
 	
 	public void setPermissionDefault(PermissionDefault permissionDefault) {
 		this.permissionDefault = permissionDefault;
+		this.subParentPermissionDefault = permissionDefault;
 	}
 	
 	public Permission getPermission() {
@@ -56,7 +57,7 @@ public abstract class Command implements TabExecutor {
 	}
 	
 	public void setSubParentPermissionDefault(PermissionDefault permissionDefault) {
-		this.subParentPermissionDefault = subParentPermissionDefault;
+		this.subParentPermissionDefault = permissionDefault;
 	}
 	
 	public Permission getSubParentPermission() {
