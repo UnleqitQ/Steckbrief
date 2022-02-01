@@ -4,7 +4,6 @@ import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
 import com.google.gson.JsonElement;
 import de.redfox.steckbrief.manager.config.ConfigManager;
-import de.redfox.steckbrief.tobemoved.Other;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -84,7 +83,6 @@ public final class CharacterManager implements Listener, Runnable {
 	@EventHandler
 	public void onJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
-		Other.team.addEntry(player.getName());
 		if (hasAliveCharacter(player.getUniqueId())) {
 			CharacterDescription character = characters.get(players.get(player.getUniqueId()).characters.get(0));
 			player.setDisplayName(ChatColor.BLUE + character.getName() + ChatColor.WHITE);

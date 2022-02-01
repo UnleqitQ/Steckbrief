@@ -4,7 +4,6 @@ import de.redfox.steckbrief.commands.RoleplayCommand;
 import de.redfox.steckbrief.manager.PlaceholderManger;
 import de.redfox.steckbrief.manager.config.ConfigManager;
 import de.redfox.steckbrief.tobemoved.FirstJoinSession;
-import de.redfox.steckbrief.tobemoved.Other;
 import net.arcaniax.headdisplays.HeadDisplays;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -30,7 +29,6 @@ public final class Steckbrief extends JavaPlugin {
 		ConfigManager.init();
 		CharacterManager.loadCharacters();
 		CharacterManager.loadPlayers();
-		Other.init();
 		
 		saveDefaultConfig();
 		rlc();

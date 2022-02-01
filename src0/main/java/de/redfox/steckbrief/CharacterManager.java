@@ -4,7 +4,6 @@ import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
 import com.google.gson.JsonElement;
 import de.redfox.steckbrief.manager.config.ConfigManager;
-import de.redfox.steckbrief.tobemoved.Other;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

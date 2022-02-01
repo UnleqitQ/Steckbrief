@@ -5,7 +5,6 @@ import de.redfox.steckbrief.events.EventPlayerJoin;
 import de.redfox.steckbrief.events.EventPlayerQuit;
 import de.redfox.steckbrief.manager.PlaceholderManger;
 import de.redfox.steckbrief.manager.config.ConfigManager;
-import de.redfox.steckbrief.tobemoved.Other;
 import net.arcaniax.headdisplays.HeadDisplays;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
