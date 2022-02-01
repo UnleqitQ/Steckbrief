@@ -1,5 +1,6 @@
 package de.redfox.steckbrief.manager;
 
+import de.redfox.steckbrief.CharacterManager;
 import de.redfox.steckbrief.Steckbrief;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.OfflinePlayer;
@@ -32,7 +33,7 @@ public class PlaceholderManger extends PlaceholderExpansion {
 	public @NotNull String getIdentifier() {
 		return Steckbrief.getInstance().getDescription().getName();
 	}
-
+	
 	@Override
 	public @NotNull String getAuthor() {
 		return Steckbrief.getInstance().getDescription().getAuthors().toString();
@@ -42,17 +43,41 @@ public class PlaceholderManger extends PlaceholderExpansion {
 	public @NotNull String getVersion() {
 		return Steckbrief.getInstance().getDescription().getVersion();
 	}
-
-
-
+	
+	
 	@Override
 	public String onRequest(OfflinePlayer player, @NotNull String params) {
-		return getValue(player.getUniqueId(), Integer.parseInt(params.replaceAll("[\\D]+", "")));
+		String[] paramArray = params.split("_");
+		if (paramArray.length > 0) {
+			if (paramArray[0].contentEquals("name")) {
+				if (CharacterManager.hasAliveCharacter(player.getUniqueId())) {
+					return CharacterManager.characters.get(
+							CharacterManager.getPlayer(player.getUniqueId()).getAliveCharacter()).getName();
+				}
+				else {
+					return player.getName();
+				}
+			}
+		}
+		return "";
 	}
 	
 	@Override
 	public String onPlaceholderRequest(Player player, @NotNull String params) {
-		return getValue(player.getUniqueId(), Integer.parseInt(params.replaceAll("[\\D]+", "")));
+		//return getValue(player.getUniqueId(), Integer.parseInt(params.replaceAll("[\\D]+", "")));
+		String[] paramArray = params.split("_");
+		if (paramArray.length > 0) {
+			if (paramArray[0].contentEquals("name")) {
+				if (CharacterManager.hasAliveCharacter(player.getUniqueId())) {
+					return CharacterManager.characters.get(
+							CharacterManager.getPlayer(player.getUniqueId()).getAliveCharacter()).getName();
+				}
+				else {
+					return player.getName();
+				}
+			}
+		}
+		return "";
 	}
 	
 }

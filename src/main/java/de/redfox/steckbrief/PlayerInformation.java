@@ -1,8 +1,10 @@
 package de.redfox.steckbrief;
 
+import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import de.redfox.steckbrief.manager.config.ConfigObject;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +14,9 @@ public class PlayerInformation {
 	
 	public UUID player;
 	public List<UUID> characters;
+	@Nullable
+	private UUID activeCharacter;
+	private long lastUpdate = 0;
 	
 	public PlayerInformation(UUID player) {
 		this.player = player;
@@ -37,6 +42,21 @@ public class PlayerInformation {
 			playerInformation.characters.add(UUID.fromString(character.getAsString()));
 		}
 		return playerInformation;
+	}
+	
+	@Nullable
+	public UUID getAliveCharacter() {
+		if (System.currentTimeMillis() - lastUpdate > 1000 * 10) {
+			lastUpdate = System.currentTimeMillis();
+			for (UUID uuid : Lists.reverse(characters)) {
+				if (CharacterManager.characters.get(uuid).alive) {
+					activeCharacter = uuid;
+					return uuid;
+				}
+			}
+			activeCharacter = null;
+		}
+		return activeCharacter;
 	}
 	
 }
