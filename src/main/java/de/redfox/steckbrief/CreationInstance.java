@@ -27,7 +27,7 @@ public class CreationInstance {
 	
 	private Step currentStep;
 	
-	private final MessageQueue messageQueue;
+	private MessageQueue messageQueue;
 	
 	
 	public CreationInstance(Player player) {
@@ -35,7 +35,8 @@ public class CreationInstance {
 		messageQueue.add(new TitleData(selectedLang.get("firstname").getAsString(), "", 1000, 0)).add(
 				new TitleData(selectedLang.get("lastname").getAsString(), "", 1000, 0)).add(
 				new TitleData(selectedLang.get("gender").getAsString(), "", 1000, 0)).add(
-				new TitleData(selectedLang.get("age").getAsString(), "", 1000, 0));
+				new TitleData(selectedLang.get("age").getAsString(), "", 1000, 0)).add(
+				new TitleData(selectedLang.get("confirm").getAsString(), "", 1000, 0));
 		
 		this.player = player;
 		description = new CharacterDescription(UUID.randomUUID());
@@ -121,9 +122,15 @@ public class CreationInstance {
 				}
 				else if (input.toLowerCase().strip().contains("n")) {
 					currentStep = Step.START;
+					messageQueue.add(new TitleData(selectedLang.get("firstname").getAsString(), "", 1000, 0)).add(
+							new TitleData(selectedLang.get("lastname").getAsString(), "", 1000, 0)).add(
+							new TitleData(selectedLang.get("gender").getAsString(), "", 1000, 0)).add(
+							new TitleData(selectedLang.get("age").getAsString(), "", 1000, 0)).add(
+							new TitleData(selectedLang.get("confirm").getAsString(), "", 1000, 0));
 				}
 				else {
 					currentStep = Step.AGE;
+					messageQueue.add(new TitleData(selectedLang.get("confirm").getAsString(), "", 1000, 0));
 				}
 			}
 		}
@@ -188,7 +195,7 @@ public class CreationInstance {
 	public static Map<String, Map<String, String>> getMessages() {
 		return Map.of("en", Map.ofEntries(Map.entry("firstname", "Enter your firstname"),
 						Map.entry("lastname", "Enter your lastname"), Map.entry("gender", "Enter your gender"),
-						Map.entry("age", "Enter your age"),
+						Map.entry("age", "Enter your age"), Map.entry("confirm", "Are you Satisfied?"),
 						Map.entry("err_invalid_firstname", "Please enter a valid lirstname (At least 3 characters)"),
 						Map.entry("err_invalid_lastname", "Please enter a valid lastname (At least 3 characters)"),
 						Map.entry("err_invalid_gender", "Please enter a valid gender (Male (Maennlich), Female (Weiblich))"),
@@ -196,8 +203,7 @@ public class CreationInstance {
 						Map.entry("err_name_exists", "This name already exists"),
 						Map.entry("err_restart", "Please redo the creation of your character"), Map.entry("name_warning",
 								"Players with offensive oder illegal names will be banned and the information will maybe be sent to the police"),
-						Map.entry("character_submit",
-								"Are you happy with your Character? (yes:j/no:n)."),
+						Map.entry("character_submit", "Are you happy with your Character? (yes:j/no:n)."),
 						Map.entry("character_rejoin", "Please rejoin to finish the creation"),
 						Map.entry("character_death_rejoin", "Your character died!\nPlease rejoin"),
 						Map.entry("character_created", "Your character was created")), "de",
@@ -205,6 +211,7 @@ public class CreationInstance {
 						Map.entry("lastname", "Wähle deinen Nachnamen"), Map.entry("gender", "Wähle dein Geschlecht"),
 						Map.entry("age", "Wähle dein Alter"),
 						Map.entry("err_invalid_firstname", "Der Vorname ist ungültig (Mindestens 3 Zeichen)"),
+						Map.entry("confirm", "Bist du zufrieden?"),
 						Map.entry("err_invalid_lastname", "Der Nachname ist ungültig (Mindestens 3 Zeichen)"),
 						Map.entry("err_invalid_gender",
 								"Das Geschlecht ist ungültig (Männlich (Maennlich) oder Weiblich (Weiblich))"),
@@ -212,8 +219,7 @@ public class CreationInstance {
 						Map.entry("err_name_exists", "Der Name ist derzeit in Benutzung. Wähle bitte einen anderen."),
 						Map.entry("err_restart",
 								"Es ist uns ein Fehler unterlaufen. Bitte wiederhole die Erstellung des Charakters."),
-						Map.entry("character_submit",
-								"Bist du zufrieden mit deinem Character? (j/n)."),
+						Map.entry("character_submit", "Bist du zufrieden mit deinem Character? (j/n)."),
 						Map.entry("name_warning",
 								"Spieler mit beleidigenden oder illegalen Namen werden gebannt und die Informationen ggf. an die Strafverfolgungsbehörden weiter gegeben."),
 						Map.entry("character_rejoin",
