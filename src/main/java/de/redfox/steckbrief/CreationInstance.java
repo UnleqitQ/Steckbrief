@@ -116,7 +116,15 @@ public class CreationInstance {
 				}
 			}
 			case CONFIRM -> {
-			
+				if (input.toLowerCase().strip().contains("j")) {
+				
+				}
+				else if (input.toLowerCase().strip().contains("n")) {
+					currentStep = Step.START;
+				}
+				else {
+					currentStep = Step.AGE;
+				}
 			}
 		}
 		nextStep();
@@ -139,6 +147,14 @@ public class CreationInstance {
 			case LASTNAME -> player.sendMessage(selectedLang.get("lastname").getAsString());
 			case SEX -> player.sendMessage(selectedLang.get("gender").getAsString());
 			case AGE -> player.sendMessage(selectedLang.get("age").getAsString());
+			case CONFIRM -> {
+				player.sendMessage("Firstname/Vorname: " + description.firstname);
+				player.sendMessage("Lastname/Nachname: " + description.lastname);
+				player.sendMessage("Age/Alter: " + description.joinAge);
+				player.sendMessage("Sex/Geschlecht: " + description.sexuality);
+				player.sendMessage("");
+				player.sendMessage(selectedLang.get("character_submit").getAsString());
+			}
 		}
 	}
 	
@@ -180,6 +196,8 @@ public class CreationInstance {
 						Map.entry("err_name_exists", "This name already exists"),
 						Map.entry("err_restart", "Please redo the creation of your character"), Map.entry("name_warning",
 								"Players with offensive oder illegal names will be banned and the information will maybe be sent to the police"),
+						Map.entry("character_submit",
+								"Are you happy with your Character? (yes:j/no:n)."),
 						Map.entry("character_rejoin", "Please rejoin to finish the creation"),
 						Map.entry("character_death_rejoin", "Your character died!\nPlease rejoin"),
 						Map.entry("character_created", "Your character was created")), "de",
@@ -194,6 +212,8 @@ public class CreationInstance {
 						Map.entry("err_name_exists", "Der Name ist derzeit in Benutzung. Wähle bitte einen anderen."),
 						Map.entry("err_restart",
 								"Es ist uns ein Fehler unterlaufen. Bitte wiederhole die Erstellung des Charakters."),
+						Map.entry("character_submit",
+								"Bist du zufrieden mit deinem Character? (j/n)."),
 						Map.entry("name_warning",
 								"Spieler mit beleidigenden oder illegalen Namen werden gebannt und die Informationen ggf. an die Strafverfolgungsbehörden weiter gegeben."),
 						Map.entry("character_rejoin",
@@ -204,7 +224,7 @@ public class CreationInstance {
 	}
 	
 	public enum Step {
-		CONFIRM(null), AGE(null), SEX(AGE), LASTNAME(SEX), FIRSTNAME(LASTNAME), START(FIRSTNAME);
+		CONFIRM(null), AGE(CONFIRM), SEX(AGE), LASTNAME(SEX), FIRSTNAME(LASTNAME), START(FIRSTNAME);
 		
 		private final Step nextStep;
 		
