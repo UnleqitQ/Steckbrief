@@ -85,13 +85,13 @@ public final class CharacterManager implements Listener, Runnable {
 		Player player = event.getPlayer();
 		if (hasAliveCharacter(player.getUniqueId())) {
 			CharacterDescription character = characters.get(players.get(player.getUniqueId()).characters.get(0));
-			player.setDisplayName(ChatColor.BLUE + character.getName() + ChatColor.WHITE);
+			player.setDisplayName(ChatColor.DARK_GREEN + character.getName() + ChatColor.WHITE);
 			player.setPlayerListName(
 					ChatColor.DARK_GREEN + character.getName() + ChatColor.GRAY + " (" + player.getName() + ")");
-			player.setCustomName(ChatColor.BLUE + character.getName() + ChatColor.WHITE);
+			player.setCustomName(ChatColor.DARK_GREEN + character.getName() + ChatColor.WHITE);
 			player.setCustomNameVisible(true);
 			User user = essentials.getUser(player);
-			user.setNickname(ChatColor.BLUE + character.getName());
+			user.setNickname(ChatColor.DARK_GREEN + character.getName());
 			player.sendMessage(
 					ChatColor.GREEN + "You joined as " + ChatColor.GOLD + character.firstname + " " + character.lastname);
 		}
