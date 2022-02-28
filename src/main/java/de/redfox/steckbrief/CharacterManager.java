@@ -1,7 +1,6 @@
 package de.redfox.steckbrief;
 
 import com.earth2me.essentials.Essentials;
-import com.earth2me.essentials.User;
 import com.google.gson.JsonElement;
 import de.redfox.steckbrief.manager.config.ConfigManager;
 import org.bukkit.Bukkit;
@@ -10,10 +9,12 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -90,8 +91,8 @@ public final class CharacterManager implements Listener, Runnable {
 					ChatColor.DARK_GREEN + character.getName() + ChatColor.GRAY + " (" + player.getName() + ")");
 			player.setCustomName(ChatColor.DARK_GREEN + character.getName() + ChatColor.WHITE);
 			player.setCustomNameVisible(true);
-			User user = essentials.getUser(player);
-			user.setNickname(ChatColor.DARK_GREEN + character.getName());
+			//User user = essentials.getUser(player);
+			//user.setNickname(ChatColor.DARK_GREEN + character.getName());
 			player.sendMessage(
 					ChatColor.GREEN + "You joined as " + ChatColor.GOLD + character.firstname + " " + character.lastname);
 		}
@@ -119,6 +120,26 @@ public final class CharacterManager implements Listener, Runnable {
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			updateInventory(player.getInventory());
 			updateInventory(player.getOpenInventory().getTopInventory());
+		}
+	}
+	
+	@EventHandler
+	public void onDeath(@NotNull PlayerDeathEvent event) {
+		if (players.containsKey(event.getEntity().getUniqueId())) {
+			CharacterDescription character = characters.get(
+					players.get(event.getEntity().getUniqueId()).getAliveCharacter());
+			event.setDeathMessage(
+					Objects.requireNonNullElse(event.getDeathMessage(), "").replaceAll(event.getEntity().getName(),
+							character.getName()));
+			if (event.getEntity().getKiller() != null && character.willDie) {
+				character.onDeath();
+				event.setKeepInventory(false);
+				event.setKeepLevel(false);
+				event.setDeathMessage(character.getName() + " ist von uns gegangen\n" + event.getDeathMessage());
+				event.setNewTotalExp(0);
+				event.setNewExp(0);
+				event.setNewLevel(0);
+			}
 		}
 	}
 	

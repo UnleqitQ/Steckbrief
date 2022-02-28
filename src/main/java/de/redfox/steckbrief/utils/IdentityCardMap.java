@@ -61,29 +61,29 @@ public class IdentityCardMap extends MapRenderer {
 	
 	public void drawAge(Graphics2D g) {
 		g.setColor(java.awt.Color.BLACK);
-		g.drawString("Age: " + character.getAge(), 8, 68);
+		g.drawString("Alter: " + character.getAge(), 8, 68);
 	}
 	
 	public void drawSex(Graphics2D g) {
 		g.setColor(java.awt.Color.BLACK);
-		g.drawString("Sex: " + character.sexuality.getDisplay(), 8, 88);
+		g.drawString("Geschlecht: " + character.sexuality.getDisplay(), 8, 88);
 	}
 	
 	
 	private void drawMarried(Graphics2D g) {
 		if (character.married != null) {
 			g.setColor(java.awt.Color.BLACK);
-			g.drawString("Married: " + CharacterManager.characters.get(character.married).getName(), 8, 108);
+			g.drawString("Verheiratet: " + CharacterManager.characters.get(character.married).getName(), 8, 108);
 		}
 	}
 	
 	@Override
 	public void render(@NotNull MapView map, @NotNull MapCanvas canvas, @NotNull Player player) {
-		if (lastUpdate - System.currentTimeMillis() > 1000 * 10 || image == null) {
+		if (System.currentTimeMillis() - lastUpdate > 1000 * 10 || image == null) {
 			image = new BufferedImage(128, 128, BufferedImage.TYPE_4BYTE_ABGR);
 			Graphics2D g = image.createGraphics();
 			g.setFont(new Font("", Font.PLAIN, 10));
-			drawBackground(g);
+			//drawBackground(g);
 			drawHead(g);
 			drawLastName(g);
 			drawFirstName(g);

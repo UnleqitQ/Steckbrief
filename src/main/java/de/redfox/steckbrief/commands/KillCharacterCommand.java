@@ -29,10 +29,10 @@ public class KillCharacterCommand extends Command {
 				if (CharacterManager.characterNames.containsKey(name)) {
 					CharacterDescription character = CharacterManager.characters.get(
 							CharacterManager.characterNames.get(name));
-					character.onDeath();
+					character.willDie = true;
 				}
 				else {
-					sender.sendMessage("Character does not exist");
+					sender.sendMessage("Character existiert nicht");
 				}
 			}
 			else {

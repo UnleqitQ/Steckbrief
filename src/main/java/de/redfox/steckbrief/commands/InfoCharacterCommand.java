@@ -37,7 +37,7 @@ public class InfoCharacterCommand extends Command {
 				sender.sendMessage("-".repeat(20));
 			}
 			else {
-				sender.sendMessage("Character does not exist");
+				sender.sendMessage("Character existiert nicht");
 			}
 		}
 		else {

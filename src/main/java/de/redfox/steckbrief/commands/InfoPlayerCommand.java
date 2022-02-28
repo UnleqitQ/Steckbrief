@@ -38,7 +38,7 @@ public class InfoPlayerCommand extends Command {
 				sender.sendMessage("-".repeat(20));
 			}
 			else {
-				sender.sendMessage("Player does not exist");
+				sender.sendMessage("Spieler existiert nicht");
 			}
 		}
 		else {

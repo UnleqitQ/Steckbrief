@@ -66,7 +66,7 @@ public class CreationInstance {
 	public void input(String input) {
 		switch (currentStep) {
 			case FIRSTNAME -> {
-				input = input.replaceAll("\\W", "");
+				input = input.replaceAll("['#+\\-\\s\\\\0-9?!\"§$%&/()=~*{\\[}\\].:,;_<>|@€]", "");
 				if (input.length() < 3) {
 					player.sendMessage(selectedLang.get("err_invalid_firstname").getAsString());
 					return;
@@ -78,7 +78,7 @@ public class CreationInstance {
 				description.firstname = input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();
 			}
 			case LASTNAME -> {
-				input = input.replaceAll("\\W", "");
+				input = input.replaceAll("['#+\\-\\s\\\\0-9?!\"§$%&/()=~*{\\[}\\].:,;_<>|@€]", "");
 				if (input.length() < 3) {
 					player.sendMessage(selectedLang.get("err_invalid_lastname").getAsString());
 					return;

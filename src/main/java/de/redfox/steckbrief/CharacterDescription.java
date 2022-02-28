@@ -34,6 +34,7 @@ public class CharacterDescription {
 	public long deathTime;
 	public boolean alive;
 	public MapView mapView;
+	public boolean willDie = false;
 	
 	public CharacterDescription(UUID uuid) {
 		this.uuid = uuid;
@@ -96,7 +97,7 @@ public class CharacterDescription {
 			difference = getTimeSinceJoin();
 		else
 			difference = getTimeDeathJoin();
-		return joinAge + difference[3];
+		return joinAge + difference[3] / 28;
 	}
 	
 	public void save() {
@@ -119,6 +120,7 @@ public class CharacterDescription {
 		if (married != null) {
 			config.addProperty("married", married.toString());
 		}
+		config.addProperty("willDie", willDie);
 		configObject.rootSection.add(uuid.toString(), config);
 	}
 	
@@ -139,6 +141,9 @@ public class CharacterDescription {
 		if (config.has("married")) {
 			characterDescription.married = UUID.fromString(config.get("married").getAsString());
 		}
+		if (config.has("willDie")) {
+			characterDescription.willDie = config.get("willDie").getAsBoolean();
+		}
 		return characterDescription;
 	}
 	
@@ -150,19 +155,19 @@ public class CharacterDescription {
 			l.add("Player: " + Bukkit.getOfflinePlayer(player).getName());
 		}
 		l.add("Name: " + getName());
-		l.add("Sex: " + sexuality.getDisplay());
-		l.add("Age: " + getAge());
+		l.add("Geschlecht: " + sexuality.getDisplay());
+		l.add("Alter: " + getAge());
 		SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 		if (admin) {
-			l.add("Created: " + format.format(new Date(firstJoin)));
+			l.add("Erstellt: " + format.format(new Date(firstJoin)));
 		}
 		if (married != null) {
-			l.add("Married: " + CharacterManager.characters.get(married).getName());
+			l.add("Verheirated: " + CharacterManager.characters.get(married).getName());
 		}
 		if (!alive) {
 			/*if (admin)
 				l.add("RT Death: " + format.format(new Date(deathTime)));*/
-			l.add("Death: " + format.format(new Date(deathTime)));
+			l.add("Gestorben: " + format.format(new Date(deathTime)));
 		}
 		return l;
 	}
